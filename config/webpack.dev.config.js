@@ -1,6 +1,5 @@
-const merge = require('webpack-merge');
+const configMerge = require('webpack-merge');
 const { join } = require('path');
-const nib = require('nib');
 const {
 	HotModuleReplacementPlugin,
 	NamedModulesPlugin
@@ -8,9 +7,8 @@ const {
 const {
 	PROJECT_ROOT,
 	baseConfig,
-	supportedBrowserslist,
 	postcssLoaderOptions,
-	getModifiedNib
+	stylusLoader
 } = require('./webpack.base.config');
 
 
@@ -62,49 +60,7 @@ const devConfig = {
 							includeRoot: true
 						}
 					},
-					{
-						loader: 'stylus-loader',
-						options: {
-							sourceMap: true,
-							use: nib(),
-							import: [
-								join(PROJECT_ROOT, 'src', 'styles', 'variables.styl'),
-								join(PROJECT_ROOT, 'src', 'styles', 'mixins.styl'),
-								getModifiedNib(require.resolve('verstat-nib'))
-							],
-							preferPathResolver: 'webpack'
-						}
-					}
-				]
-			},
-			{
-				test: /\.(js|jsx)$/,
-				exclude: /node_modules/,
-				use: [
-					{
-						loader: 'babel-loader',
-						options: {
-							cacheDirectory: true,
-							babelrc: false,
-							plugins: [
-								'react-hot-loader/babel',
-								'transform-runtime',
-								'transform-object-rest-spread'
-							],
-							presets: [
-								'react',
-								[
-									'env',
-									{
-										targets: {
-											browsers: supportedBrowserslist
-										},
-										modules: false
-									}
-								]
-							]
-						}
-					}
+					stylusLoader
 				]
 			}
 		]
@@ -115,4 +71,4 @@ const devConfig = {
 	]
 };
 
-module.exports = merge(baseConfig, devConfig);
+module.exports = configMerge(baseConfig, devConfig);

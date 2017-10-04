@@ -1,3 +1,4 @@
+const nib = require('nib');
 const {
 	dirname,
 	resolve,
@@ -20,6 +21,26 @@ const supportedBrowserslist = [
 	'last 4 versions',
 	'ie >= 10'
 ];
+const stylusLoader = {
+	loader: 'stylus-loader',
+	options: {
+		sourceMap: true,
+		use: nib(),
+		import: [
+			join(PROJECT_ROOT, 'src', 'styles', 'variables.styl'),
+			join(PROJECT_ROOT, 'src', 'styles', 'mixins.styl'),
+			getModifiedNib(require.resolve('verstat-nib'))
+		],
+		preferPathResolver: 'webpack'
+	}
+};
+const babelPlugins = [
+	'transform-runtime',
+	'transform-object-rest-spread'
+];
+if (JSON.stringify(process.env.NODE_ENV) === 'development') {
+	babelPlugins.unshift('react-hot-loader/babel');
+}
 const postcssLoaderOptions = {
 	sourceMap: true,
 	config: {
@@ -86,19 +107,14 @@ const baseConfig = {
 				test: /\.(jpe?g|png|gif)$/,
 				use: {
 					loader: 'file-loader',
-					options: {
-						name: 'assets/i/[path][name].[ext]'
-					}
+					options: { name: 'assets/i/[path][name].[ext]' }
 				}
 			},
 			{
 				test: /\.(mp4|webm)$/,
-				include: join(PROJECT_ROOT, 'src/static/v'),
 				use: {
 					loader: 'file-loader',
-					options: {
-						name: 'assets/v/[path][name].[ext]'
-					}
+					options: { name: 'assets/v/[path][name].[ext]' }
 				}
 			},
 			{
@@ -106,9 +122,7 @@ const baseConfig = {
 				exclude: /font|f|fonts/,
 				use: {
 					loader: 'file-loader',
-					options: {
-						name: 'assets/i/[path][name].[ext]'
-					}
+					options: { name: 'assets/i/[path][name].[ext]' }
 				}
 			},
 			{
@@ -116,9 +130,7 @@ const baseConfig = {
 				include: /font|f|fonts/,
 				use: {
 					loader: 'file-loader',
-					options: {
-						name: 'assets/f/[path][name].[ext]'
-					}
+					options: { name: 'assets/f/[path][name].[ext]' }
 				}
 			},
 			{
@@ -128,6 +140,30 @@ const baseConfig = {
 			{
 				test: /\.html$/,
 				use: 'html-loader'
+			},
+			{
+				test: /\.(js|jsx)$/,
+				exclude: /node_modules/,
+				use: [
+					{
+						loader: 'babel-loader',
+						options: {
+							cacheDirectory: true,
+							babelrc: false,
+							plugins: babelPlugins,
+							presets: [
+								'react',
+								[
+									'env',
+									{
+										targets: { browsers: supportedBrowserslist },
+										modules: false
+									}
+								]
+							]
+						}
+					}
+				]
 			}
 		]
 	},
@@ -143,10 +179,7 @@ const baseConfig = {
 			hash: false,
 			cache: true,
 			inject: 'body',
-			minify: {
-				removeComments: true,
-				collapseWhitespace: true
-			}
+			minify: false
 		}),
 		new LoaderOptionsPlugin({
 			options: {
@@ -168,7 +201,6 @@ const baseConfig = {
 module.exports = {
 	PROJECT_ROOT,
 	baseConfig,
-	supportedBrowserslist,
 	postcssLoaderOptions,
-	getModifiedNib
+	stylusLoader
 };

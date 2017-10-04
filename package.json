@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Template for React",
   "scripts": {
-    "build:min": "",
-    "build": "",
-    "prod": "cross-env NODE_ENV=production node server/server.config.js",
-    "start": "cross-env NODE_ENV=development node server/server.config.js"
+    "build:min": "cross-env NODE_ENV=production webpack --progress --colors --config config/webpack.prod.config.js",
+    "build": "cross-env NODE_ENV=production BEAUTIFY=true webpack --progress --colors --config config/webpack.prod.config.js",
+    "prod": "cross-env NODE_ENV=production SOURCEMAP=true node server/server.prod.config.js",
+    "start": "cross-env NODE_ENV=development node server/server.dev.config.js"
   },
   "repository": {
     "type": "git",
