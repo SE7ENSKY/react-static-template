@@ -35,6 +35,8 @@ const stylusLoader = {
 	}
 };
 const babelPlugins = [
+	'transform-regenerator',
+	'transform-class-properties',
 	'transform-runtime',
 	'transform-object-rest-spread'
 ];
@@ -132,6 +134,14 @@ const baseConfig = {
 					loader: 'file-loader',
 					options: { name: 'assets/f/[path][name].[ext]' }
 				}
+			},
+			{
+				test: /\.modernizrrc.js$/,
+				use: ['modernizr-loader']
+			},
+			{
+				test: /\.modernizrrc(\.json)?$/,
+				use: ['modernizr-loader', 'json-loader']
 			},
 			{
 				test: /\.json$/,

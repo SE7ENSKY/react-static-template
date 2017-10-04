@@ -4,6 +4,7 @@ const {
 	HotModuleReplacementPlugin,
 	NamedModulesPlugin
 } = require('webpack');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 const {
 	PROJECT_ROOT,
 	baseConfig,
@@ -67,7 +68,11 @@ const devConfig = {
 	},
 	plugins: [
 		new HotModuleReplacementPlugin(),
-		new NamedModulesPlugin()
+		new NamedModulesPlugin(),
+		new CircularDependencyPlugin({
+			exclude: /node_modules/,
+			failOnError: true
+		})
 	]
 };
 
