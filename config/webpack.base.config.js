@@ -35,7 +35,6 @@ const stylusLoader = {
 	}
 };
 const babelPlugins = [
-	'transform-regenerator',
 	'transform-class-properties',
 	'transform-runtime',
 	'transform-object-rest-spread'

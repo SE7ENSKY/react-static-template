@@ -17,6 +17,7 @@ const devConfig = {
 	devtool: 'cheap-module-eval-source-map',
 	entry: {
 		main: [
+			'event-source-polyfill',
 			'react-hot-loader/patch',
 			'webpack-hot-middleware/client',
 			'webpack/hot/dev-server',
