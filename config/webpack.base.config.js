@@ -8,6 +8,7 @@ const {
 } = require('path');
 const { readFileSync } = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const {
 	NoEmitOnErrorsPlugin,
 	WatchIgnorePlugin,
@@ -180,6 +181,15 @@ const baseConfig = {
 		new DefinePlugin({
 			'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) }
 		}),
+		new CleanWebpackPlugin(
+			['dist'],
+			{
+				root: PROJECT_ROOT,
+				verbose: true,
+				watch: false,
+				dry: false
+			}
+		),
 		new NoEmitOnErrorsPlugin(),
 		new WatchIgnorePlugin([join(PROJECT_ROOT, 'node_modules')]),
 		new HtmlWebpackPlugin({

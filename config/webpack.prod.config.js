@@ -7,7 +7,6 @@ const cssNano = require('cssnano');
 const StylesPostprocessorPlugin = require('styles-postprocessor-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const BeautifyHtmlPlugin = require('beautify-html-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const {
 	optimize: {
 		UglifyJsPlugin,
@@ -144,15 +143,6 @@ const prodConfig = {
 		]
 	},
 	plugins: [
-		new CleanWebpackPlugin(
-			['dist'],
-			{
-				root: PROJECT_ROOT,
-				verbose: true,
-				watch: false,
-				dry: false
-			}
-		),
 		new ScriptExtHtmlWebpackPlugin({
 			defaultAttribute: 'defer'
 		}),
