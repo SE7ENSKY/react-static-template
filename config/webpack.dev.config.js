@@ -12,7 +12,6 @@ const {
 	stylusLoader
 } = require('./webpack.base.config');
 
-
 const devConfig = {
 	devtool: 'cheap-module-eval-source-map',
 	entry: {

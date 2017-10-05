@@ -21,7 +21,6 @@ const {
 	stylusLoader
 } = require('./webpack.base.config');
 
-
 const cssnanoBaseConfig = {
 	autoprefixer: false,
 	rawCache: true,
@@ -69,9 +68,9 @@ const cssnanoMinConfig = {
 };
 const stylesPostprocessorPlugins = [
 	cssMQpacker(),
-	cssNano(merge(cssnanoBaseConfig, JSON.stringify(process.env.BEAUTIFY) ? cssnanoMinConfig : {}))
+	cssNano(merge(cssnanoBaseConfig, process.env.BEAUTIFY ? cssnanoMinConfig : {}))
 ];
-if (JSON.stringify(process.env.BEAUTIFY)) {
+if (process.env.BEAUTIFY) {
 	stylesPostprocessorPlugins.push(perfectionist({
 		cascade: true,
 		colorCase: 'lower',
@@ -95,10 +94,10 @@ const prodConfig = {
 	},
 	output: {
 		publicPath: '/',
-		filename: `assets/[name]${JSON.stringify(process.env.BEAUTIFY) ? '' : '.min'}.[chunkhash:8].js`
+		filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`
 	},
 	watch: false,
-	devtool: JSON.stringify(process.env.SOURCEMAP) ? 'source-map' : false,
+	devtool: process.env.SOURCEMAP ? 'source-map' : false,
 	module: {
 		rules: [
 			{
@@ -149,7 +148,7 @@ const prodConfig = {
 		new BeautifyHtmlPlugin({ ocd: true }),
 		new CommonsChunkPlugin({
 			name: 'main.vendor',
-			filename: `assets/[name]${JSON.stringify(process.env.BEAUTIFY) ? '' : '.min'}.[chunkhash:8].js`,
+			filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`,
 			minChunks: (module, count) => /node_modules/.test(module.resource) && count >= 1
 		}),
 		new ExtractTextPlugin({
@@ -164,7 +163,7 @@ const prodConfig = {
 	]
 };
 
-if (!JSON.stringify(process.env.BEAUTIFY)) {
+if (!process.env.BEAUTIFY) {
 	prodConfig.plugins.push(new UglifyJsPlugin({
 		sourceMap: true,
 		mangle: {

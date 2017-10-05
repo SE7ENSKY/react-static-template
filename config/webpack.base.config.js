@@ -1,3 +1,10 @@
+if (process.env.TIMESTAMP) {
+	require('console-stamp')(console, {
+		pattern: 'HH:MM:ss',
+		label: false
+	});
+}
+
 const nib = require('nib');
 const {
 	dirname,
@@ -15,7 +22,6 @@ const {
 	DefinePlugin,
 	LoaderOptionsPlugin
 } = require('webpack');
-
 
 const PROJECT_ROOT = resolve(__dirname, '../');
 const supportedBrowserslist = [
@@ -40,7 +46,7 @@ const babelPlugins = [
 	'transform-runtime',
 	'transform-object-rest-spread'
 ];
-if (JSON.stringify(process.env.NODE_ENV) === 'development') {
+if (process.env.NODE_ENV === 'development') {
 	babelPlugins.unshift('react-hot-loader/babel');
 }
 const postcssLoaderOptions = {
@@ -66,7 +72,6 @@ function getModifiedNib(path) {
 	}
 	return join(dirPath, 'nib-mod.styl');
 }
-
 
 const baseConfig = {
 	output: {
