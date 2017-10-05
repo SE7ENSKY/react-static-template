@@ -8,9 +8,7 @@ const createStore = (initialState = {}) => {
 	const middleware = [thunk];
 	const enhancers = [];
 
-	const __DEV__ = true;
-
-	if (__DEV__) {
+	if (process.env.NODE_ENV === 'development') {
 		const devToolsExtension = window.devToolsExtension;
 		if (typeof devToolsExtension === 'function') {
 			enhancers.push(devToolsExtension());

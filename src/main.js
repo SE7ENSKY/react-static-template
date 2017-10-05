@@ -10,15 +10,17 @@ const store = createStore();
 const MOUNT_NODE = document.querySelector('#app');
 
 function initRender() {
-	render(<AppContainer>
-		<App store={store} />
-	</AppContainer>, MOUNT_NODE);
+	render(
+		<AppContainer>
+			<App store={store} />
+		</AppContainer>,
+		MOUNT_NODE
+	);
 }
 
 initRender();
 
 // Hot Module Replacement API
-// https://github.com/gaearon/react-hot-loader/tree/master/docs
 if (module.hot) {
-	module.hot.accept('containers/App.js', () => initRender());
+	module.hot.accept('containers/App', () => initRender());
 }
