@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Template for React",
   "scripts": {
-    "build:min": "cross-env NODE_ENV=production webpack --progress --colors --config config/webpack.prod.config.js",
-    "build": "cross-env NODE_ENV=production BEAUTIFY=true webpack --progress --colors --config config/webpack.prod.config.js",
+    "build:min": "cross-env NODE_ENV=production webpack --progress --colors --hide-modules --config config/webpack.prod.config.js",
+    "build": "cross-env NODE_ENV=production BEAUTIFY=true webpack --progress --colors --hide-modules --config config/webpack.prod.config.js",
     "prod": "cross-env NODE_ENV=production SOURCEMAP=true node server/server.prod.config.js",
     "start": "cross-env NODE_ENV=development node server/server.dev.config.js"
   },
@@ -50,7 +50,6 @@
     "postcss": "^6.0.12",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.6",
-    "progress-bar-webpack-plugin": "^1.10.0",
     "react-hot-loader": "^3.0.0-beta.7",
     "resolve-url-loader": "^2.1.0",
     "script-ext-html-webpack-plugin": "^1.8.5",
@@ -65,6 +64,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "history": "^4.7.2",
     "immutable": "^4.0.0-rc.4",
     "modernizr": "^3.5.0",

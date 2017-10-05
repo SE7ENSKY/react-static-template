@@ -4,7 +4,6 @@ const {
 	HotModuleReplacementPlugin,
 	NamedModulesPlugin
 } = require('webpack');
-// const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const {
 	PROJECT_ROOT,
@@ -69,7 +68,6 @@ const devConfig = {
 		]
 	},
 	plugins: [
-		// new ProgressBarPlugin(),
 		new HotModuleReplacementPlugin(),
 		new NamedModulesPlugin(),
 		new CircularDependencyPlugin({
