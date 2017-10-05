@@ -1,6 +1,6 @@
-import Content from './Content';
+import Content from "./Content";
 
 export default store => ({
-	path: 'content',
+	path: "content",
 	component: Content
 });

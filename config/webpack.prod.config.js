@@ -1,25 +1,25 @@
-const configMerge = require('webpack-merge');
-const { join } = require('path');
-const { merge } = require('lodash');
-const cssMQpacker = require('css-mqpacker');
-const perfectionist = require('perfectionist');
-const cssNano = require('cssnano');
-const StylesPostprocessorPlugin = require('styles-postprocessor-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const BeautifyHtmlPlugin = require('beautify-html-plugin');
+const configMerge = require("webpack-merge");
+const { join } = require("path");
+const { merge } = require("lodash");
+const cssMQpacker = require("css-mqpacker");
+const perfectionist = require("perfectionist");
+const cssNano = require("cssnano");
+const StylesPostprocessorPlugin = require("styles-postprocessor-plugin");
+const ScriptExtHtmlWebpackPlugin = require("script-ext-html-webpack-plugin");
+const BeautifyHtmlPlugin = require("beautify-html-plugin");
 const {
 	optimize: {
 		UglifyJsPlugin,
 		CommonsChunkPlugin
 	}
-} = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+} = require("webpack");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const {
 	PROJECT_ROOT,
 	baseConfig,
 	postcssLoaderOptions,
 	stylusLoader
-} = require('./webpack.base.config');
+} = require("./webpack.base.config");
 
 const cssnanoBaseConfig = {
 	autoprefixer: false,
@@ -73,10 +73,10 @@ const stylesPostprocessorPlugins = [
 if (process.env.BEAUTIFY) {
 	stylesPostprocessorPlugins.push(perfectionist({
 		cascade: true,
-		colorCase: 'lower',
+		colorCase: "lower",
 		colorShorthand: false,
-		format: 'expanded',
-		indentChar: ' ',
+		format: "expanded",
+		indentChar: " ",
 		indentSize: 2,
 		trimLeadingZero: false,
 		trimTrailingZeros: true,
@@ -90,69 +90,69 @@ if (process.env.BEAUTIFY) {
 
 const prodConfig = {
 	entry: {
-		main: join(PROJECT_ROOT, 'src', 'main.js')
+		main: join(PROJECT_ROOT, "src", "main.js")
 	},
 	output: {
-		publicPath: '/',
-		filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`
+		publicPath: "/",
+		filename: `assets/[name]${process.env.BEAUTIFY ? "" : ".min"}.[chunkhash:8].js`
 	},
 	watch: false,
-	devtool: process.env.SOURCEMAP ? 'source-map' : false,
+	devtool: process.env.SOURCEMAP ? "source-map" : false,
 	module: {
 		rules: [
 			{
 				test: /\.css$/,
 				use: ExtractTextPlugin.extract({
 					use: [
-						'css-loader',
+						"css-loader",
 						{
-							loader: 'postcss-loader',
+							loader: "postcss-loader",
 							options: postcssLoaderOptions
 						},
 						{
-							loader: 'resolve-url-loader',
+							loader: "resolve-url-loader",
 							options: {
 								includeRoot: true
 							}
 						}
 					],
-					fallback: 'style-loader'
+					fallback: "style-loader"
 				})
 			},
 			{
 				test: /\.styl$/,
 				use: ExtractTextPlugin.extract({
 					use: [
-						'css-loader',
+						"css-loader",
 						{
-							loader: 'postcss-loader',
+							loader: "postcss-loader",
 							options: postcssLoaderOptions
 						},
 						{
-							loader: 'resolve-url-loader',
+							loader: "resolve-url-loader",
 							options: {
 								includeRoot: true
 							}
 						},
 						stylusLoader
 					],
-					fallback: 'style-loader'
+					fallback: "style-loader"
 				})
 			}
 		]
 	},
 	plugins: [
 		new ScriptExtHtmlWebpackPlugin({
-			defaultAttribute: 'defer'
+			defaultAttribute: "defer"
 		}),
 		new BeautifyHtmlPlugin({ ocd: true }),
 		new CommonsChunkPlugin({
-			name: 'main.vendor',
-			filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`,
+			name: "main.vendor",
+			filename: `assets/[name]${process.env.BEAUTIFY ? "" : ".min"}.[chunkhash:8].js`,
 			minChunks: (module, count) => /node_modules/.test(module.resource) && count >= 1
 		}),
 		new ExtractTextPlugin({
-			filename: 'assets/[name].min.[chunkhash:8].css',
+			filename: "assets/[name].min.[chunkhash:8].css",
 			allChunks: true
 		}),
 		new StylesPostprocessorPlugin({
