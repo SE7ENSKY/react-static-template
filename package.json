@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Template for React",
   "scripts": {
-    "build:min": "cross-env NODE_ENV=production TIMESTAMP=true webpack --progress --colors --hide-modules --config config/webpack.prod.config.js",
-    "build": "cross-env NODE_ENV=production BEAUTIFY=true TIMESTAMP=true webpack --progress --colors --hide-modules --config config/webpack.prod.config.js",
+    "build:min": "cross-env NODE_ENV=production TIMESTAMP=true webpack --progress --hide-modules --config config/webpack.prod.config.js",
+    "build": "cross-env NODE_ENV=production BEAUTIFY=true TIMESTAMP=true webpack --progress --hide-modules --config config/webpack.prod.config.js",
     "prod": "cross-env NODE_ENV=production SOURCEMAP=true node server/server.config.js",
     "start": "cross-env NODE_ENV=development node server/server.config.js"
   },
