@@ -40,9 +40,7 @@ const devConfig = {
 					},
 					{
 						loader: "resolve-url-loader",
-						options: {
-							includeRoot: true
-						}
+						options: { includeRoot: true }
 					}
 				]
 			},
@@ -57,9 +55,7 @@ const devConfig = {
 					},
 					{
 						loader: "resolve-url-loader",
-						options: {
-							includeRoot: true
-						}
+						options: { includeRoot: true}
 					},
 					stylusLoader
 				]

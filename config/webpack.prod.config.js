@@ -13,6 +13,7 @@ const {
 		CommonsChunkPlugin
 	}
 } = require("webpack");
+const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const {
 	PROJECT_ROOT,
@@ -111,9 +112,7 @@ const prodConfig = {
 						},
 						{
 							loader: "resolve-url-loader",
-							options: {
-								includeRoot: true
-							}
+							options: { includeRoot: true }
 						}
 					],
 					fallback: "style-loader"
@@ -130,9 +129,7 @@ const prodConfig = {
 						},
 						{
 							loader: "resolve-url-loader",
-							options: {
-								includeRoot: true
-							}
+							options: { includeRoot: true }
 						},
 						stylusLoader
 					],
@@ -176,6 +173,13 @@ if (!process.env.BEAUTIFY) {
 			dead_code: true,
 			warnings: false
 		}
+	}));
+}
+
+if (!process.env.TIMESTAMP) {
+	prodConfig.plugins.push(new ProgressBarPlugin({
+		width: 40,
+		summary: false
 	}));
 }
 

@@ -111,7 +111,7 @@ const baseConfig = {
 	module: {
 		rules: [
 			{
-				test: /\.(jpe?g|png|gif)$/,
+				test: /\.(jpe?g|png|gif|ico)$/,
 				use: {
 					loader: "file-loader",
 					options: { name: "assets/i/[path][name].[ext]" }
@@ -154,7 +154,10 @@ const baseConfig = {
 			},
 			{
 				test: /\.html$/,
-				use: "html-loader"
+				use: {
+					loader: "html-loader",
+					options: { attrs: ["img:src", "link:href"] }
+				}
 			},
 			{
 				test: /\.(js|jsx)$/,
