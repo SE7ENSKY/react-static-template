@@ -7,7 +7,6 @@ const { join } = require("path");
 const express = require("express");
 const compress = require("compression");
 const webpack = require("webpack");
-const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
 const webpackBaseConfig = require("../config/webpack.base.config.js");
@@ -42,13 +41,6 @@ const devServerConfig = {
 		children: false
 	}
 };
-function addProgressBarPlugin(compiler) {
-	new ProgressBarPlugin({
-		width: 40,
-		summary: false
-	}).apply(compiler);
-	return compiler;
-}
 
 const app = express();
 const compiler = webpack(process.env.NODE_ENV === "development" ? webpackDevConfig : webpackProdConfig);

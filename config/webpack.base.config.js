@@ -42,6 +42,8 @@ const stylusLoader = {
 	}
 };
 const babelPlugins = [
+	"syntax-dynamic-import",
+	"dynamic-import-webpack",
 	"transform-class-properties",
 	"transform-runtime",
 	"transform-object-rest-spread"
@@ -142,7 +144,7 @@ const baseConfig = {
 			},
 			{
 				test: /\.modernizrrc.js$/,
-				use: ["modernizr-loader"]
+				use: "modernizr-loader"
 			},
 			{
 				test: /\.modernizrrc(\.json)?$/,
