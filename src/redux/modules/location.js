@@ -1,6 +1,5 @@
 import browserHistory from "react-router/lib/browserHistory";
-
-export const LOCATION_CHANGE = "LOCATION_CHANGE";
+import { LOCATION_CHANGE } from 'store/constants';
 
 export function locationChange(location = "/") {
 	return {
@@ -9,15 +8,12 @@ export function locationChange(location = "/") {
 	};
 }
 
-export const updateLocation = ({ dispatch }) => {
-	return (nextLocation) => dispatch(locationChange(nextLocation));
-};
+export const updateLocation = ({ dispatch }) => nextLocation =>
+	dispatch(locationChange(nextLocation));
 
 const initialState = browserHistory.getCurrentLocation();
-const reducer = (state = initialState, action) => {
-	return action.type === LOCATION_CHANGE
-		? action.payload
-		: state;
-};
+const reducer = (state = initialState, action) => (
+	action.type === LOCATION_CHANGE ? action.payload : state
+);
 
 export default reducer;
