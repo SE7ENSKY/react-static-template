@@ -210,6 +210,7 @@ const baseConfig = {
 					"i/*",
 					"v/*",
 					"f/*",
+					"*.js",
 					".DS_Store"
 				]
 			}
