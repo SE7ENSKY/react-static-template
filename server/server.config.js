@@ -45,6 +45,8 @@ const devServerConfig = {
 
 const app = express();
 const compiler = webpack(process.env.NODE_ENV === "development" ? webpackDevConfig : webpackProdConfig);
+app.use(cors());
+
 if (process.env.NODE_ENV === "development") {
 	const middleware = webpackDevMiddleware(compiler, devServerConfig);
 	app.use(middleware);
@@ -68,7 +70,6 @@ if (process.env.NODE_ENV === "development") {
 		console.log(stats.toString(devServerConfig.stats));
 	});
 	compiler.plugin("done", function (stats) {
-		app.use(cors());
 		app.use(compress());
 		app.use(express.static(webpackBaseConfig.baseConfig.output.path));
 		app.get("*", function response(req, res) {
