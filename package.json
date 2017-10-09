@@ -5,8 +5,8 @@
   "scripts": {
     "build:min": "cross-env NODE_ENV=production TIMESTAMP=true webpack --progress --hide-modules --config config/webpack.prod.config.js",
     "build": "cross-env NODE_ENV=production BEAUTIFY=true TIMESTAMP=true webpack --progress --hide-modules --config config/webpack.prod.config.js",
-    "prod": "cross-env NODE_ENV=production SOURCEMAP=true node server/server.config.js",
-    "start": "cross-env NODE_ENV=development node server/server.config.js"
+    "prod": "cross-env NODE_ENV=production SOURCEMAP=true nodemon -e js --watch config --watch server server/server.config.js",
+    "start": "cross-env NODE_ENV=development nodemon -e js --watch config --watch server server/server.config.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "clean-webpack-plugin": "^0.1.17",
     "compression": "^1.7.1",
     "console-stamp": "^0.2.5",
+    "copy-webpack-plugin": "^4.1.1",
     "cors": "^2.8.4",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
@@ -50,6 +51,7 @@
     "imports-loader": "^0.7.1",
     "lodash": "^4.17.4",
     "modernizr-loader": "^1.0.1",
+    "nodemon": "^1.12.1",
     "perfectionist": "^2.4.0",
     "postcss": "^6.0.12",
     "postcss-cssnext": "^3.0.2",

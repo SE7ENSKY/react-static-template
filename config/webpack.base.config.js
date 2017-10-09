@@ -15,6 +15,7 @@ const {
 } = require("path");
 const { readFileSync } = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const {
 	NoEmitOnErrorsPlugin,
@@ -107,7 +108,8 @@ const baseConfig = {
 			i: join(PROJECT_ROOT, "src", "static", "i"),
 			v: join(PROJECT_ROOT, "src", "static", "v"),
 			store: join(PROJECT_ROOT, "src", "store"),
-			styles: join(PROJECT_ROOT, "src", "styles")
+			styles: join(PROJECT_ROOT, "src", "styles"),
+			utils: join(PROJECT_ROOT, "src", "utils")
 		}
 	},
 	module: {
@@ -200,6 +202,18 @@ const baseConfig = {
 				dry: false
 			}
 		),
+		new CopyWebpackPlugin([
+			{
+				from: "src/static",
+				to: "assets",
+				ignore: [
+					"i/*",
+					"v/*",
+					"f/*",
+					".DS_Store"
+				]
+			}
+		]),
 		new NoEmitOnErrorsPlugin(),
 		new WatchIgnorePlugin([join(PROJECT_ROOT, "node_modules")]),
 		new HtmlWebpackPlugin({
@@ -214,12 +228,11 @@ const baseConfig = {
 			options: {
 				customInterpolateName: (url, name, options) => {
 					const prefix = name.replace("[path][name].[ext]", "");
-					const file = basename(url);
 					const directory = dirname(url).split(sep).pop();
 					return join(
 						prefix,
 						prefix.split(sep).indexOf(directory) === -1 ? directory : "",
-						file
+						basename(url)
 					);
 				}
 			}
@@ -233,3 +246,4 @@ module.exports = {
 	postcssLoaderOptions,
 	stylusLoader
 };
+
