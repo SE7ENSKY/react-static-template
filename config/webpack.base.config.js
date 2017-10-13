@@ -80,6 +80,13 @@ const baseConfig = {
 	output: {
 		path: join(PROJECT_ROOT, "dist")
 	},
+	node: {
+		dgram: "empty",
+		fs: "empty",
+		net: "empty",
+		tls: "empty",
+		child_process: "empty"
+	},
 	cache: true,
 	resolve: {
 		modules: [

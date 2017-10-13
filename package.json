@@ -6,7 +6,9 @@
     "build:min": "cross-env NODE_ENV=production TIMESTAMP=true webpack --progress --hide-modules --config config/webpack.prod.config.js",
     "build": "cross-env NODE_ENV=production BEAUTIFY=true TIMESTAMP=true webpack --progress --hide-modules --config config/webpack.prod.config.js",
     "prod": "cross-env NODE_ENV=production SOURCEMAP=true nodemon -e js --watch config --watch server server/server.config.js",
-    "start": "cross-env NODE_ENV=development nodemon -e js --watch config --watch server server/server.config.js"
+    "start": "cross-env NODE_ENV=development nodemon -e js --watch config --watch server server/server.config.js",
+    "test:coverage": "jest --coverage --config config/jest.config.js",
+    "test": "jest --watchAll --config config/jest.config.js"
   },
   "repository": {
     "type": "git",
@@ -57,7 +59,7 @@
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.6",
     "progress-bar-webpack-plugin": "^1.10.0",
-    "react-hot-loader": "^3.0.0-beta.7",
+    "react-hot-loader": "^3.0.0",
     "resolve-url-loader": "^2.1.0",
     "script-ext-html-webpack-plugin": "^1.8.5",
     "style-loader": "^0.19.0",
@@ -73,10 +75,14 @@
   "dependencies": {
     "axios": "^0.16.2",
     "classnames": "^2.2.5",
+    "enzyme": "^3.1.0",
+    "enzyme-to-json": "^3.1.2",
     "history": "^4.7.2",
     "immutable": "^4.0.0-rc.4",
+    "jest": "^21.2.1",
     "modernizr": "^3.5.0",
     "normalize.css": "^7.0.0",
+    "normalizr": "^3.2.4",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -84,6 +90,7 @@
     "react-redux": "^5.0.6",
     "react-router": "^3.2.0",
     "redux": "^3.7.2",
+    "redux-saga": "^0.15.6",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1"
   }
