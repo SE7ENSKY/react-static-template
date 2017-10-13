@@ -49,6 +49,24 @@ const babelPlugins = [
 	"transform-runtime",
 	"transform-object-rest-spread"
 ];
+const babelLoader = {
+	loader: "babel-loader",
+	options: {
+		cacheDirectory: true,
+		babelrc: false,
+		plugins: babelPlugins,
+		presets: [
+			"react",
+			[
+				"env",
+				{
+					targets: { browsers: supportedBrowserslist },
+					modules: false
+				}
+			]
+		]
+	}
+};
 if (process.env.NODE_ENV === "development") {
 	babelPlugins.unshift("react-hot-loader/babel");
 }
@@ -171,28 +189,16 @@ const baseConfig = {
 				}
 			},
 			{
+				test: /\.worker\.js$/,
+				use: [
+					"worker-loader",
+					babelLoader
+				]
+			},
+			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
-				use: [
-					{
-						loader: "babel-loader",
-						options: {
-							cacheDirectory: true,
-							babelrc: false,
-							plugins: babelPlugins,
-							presets: [
-								"react",
-								[
-									"env",
-									{
-										targets: { browsers: supportedBrowserslist },
-										modules: false
-									}
-								]
-							]
-						}
-					}
-				]
+				use: [babelLoader]
 			}
 		]
 	},
@@ -201,7 +207,10 @@ const baseConfig = {
 			"process.env": { NODE_ENV: JSON.stringify(process.env.NODE_ENV) }
 		}),
 		new CleanWebpackPlugin(
-			["dist"],
+			[
+				"dist",
+				"coverage"
+			],
 			{
 				root: PROJECT_ROOT,
 				verbose: true,

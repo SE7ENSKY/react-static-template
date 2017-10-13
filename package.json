@@ -7,8 +7,8 @@
     "build": "cross-env NODE_ENV=production BEAUTIFY=true TIMESTAMP=true webpack --progress --hide-modules --config config/webpack.prod.config.js",
     "prod": "cross-env NODE_ENV=production SOURCEMAP=true nodemon -e js --watch config --watch server server/server.config.js",
     "start": "cross-env NODE_ENV=development nodemon -e js --watch config --watch server server/server.config.js",
-    "test:coverage": "jest --coverage --config config/jest.config.js",
-    "test": "jest --watchAll --config config/jest.config.js"
+    "test:coverage": "cross-env NODE_ENV=test jest --coverage --config config/jest.config.js",
+    "test": "cross-env NODE_ENV=test jest --watchAll --config config/jest.config.js"
   },
   "repository": {
     "type": "git",
@@ -70,7 +70,8 @@
     "webpack": "^3.6.0",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "worker-loader": "^1.0.0"
   },
   "dependencies": {
     "axios": "^0.16.2",
