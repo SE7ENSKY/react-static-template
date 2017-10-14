@@ -189,13 +189,6 @@ const baseConfig = {
 				}
 			},
 			{
-				test: /\.worker\.js$/,
-				use: [
-					babelLoader,
-					"worker-loader"
-				]
-			},
-			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
 				use: [babelLoader]
