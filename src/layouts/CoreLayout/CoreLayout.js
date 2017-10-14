@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+
 const CoreLayout = ({ children }) => (
 	<div className="main">
 		{children}
@@ -8,7 +9,7 @@ const CoreLayout = ({ children }) => (
 );
 
 CoreLayout.propTypes = {
-	children: PropTypes.object.isRequired
+	children: PropTypes.any.isRequired
 };
 
 export default CoreLayout;

@@ -1,24 +1,33 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { Provider } from "react-redux";
-import { Router, browserHistory } from "react-router";
-import routes from "routes/index";
+import {
+	Route,
+	Link
+} from "react-router-dom";
+import CoreLayout from "layouts/CoreLayout";
+import Home from "components/Home";
+import About from "components/About";
 
-const App = (props) => {
-	const { store } = props;
 
-	return (
-		<Provider store={store}>
-			<Router
-				history={browserHistory}
-				children={routes(store)}
+const App = () => (
+	<div>
+		<header>
+			<Link to="/">Home</Link>
+			<Link to="/about-us">About</Link>
+		</header>
+
+		<CoreLayout>
+			<Route
+				exact
+				path="/"
+				component={Home}
 			/>
-		</Provider>
-	);
-};
-
-App.propTypes = {
-	store: PropTypes.objectOf(PropTypes.any).isRequired
-};
+			<Route
+				exact
+				path="/about-us"
+				component={About}
+			/>
+		</CoreLayout>
+	</div>
+);
 
 export default App;
