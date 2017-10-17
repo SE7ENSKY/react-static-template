@@ -1,26 +1,19 @@
 import React from "react";
 import { render } from "react-dom";
 import { AppContainer } from "react-hot-loader";
-import createStore from "./store/createStore";
-import App from "./containers/App";
-import "normalize.css/normalize.css";
-import "styles/main.styl";
-
-const store = createStore();
-const MOUNT_NODE = document.querySelector("#app");
+import App from "containers/App";
 
 function initRender() {
 	render(
 		<AppContainer>
-			<App store={store} />
+			<App />
 		</AppContainer>,
-		MOUNT_NODE
+		document.querySelector("#app")
 	);
 }
 
 initRender();
 
-// Hot Module Replacement API
 if (module.hot) {
 	module.hot.accept("containers/App", () => initRender());
 }

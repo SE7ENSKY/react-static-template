@@ -1,2 +1,4 @@
-// Reducer action types
-export const LOCATION_CHANGE = 'LOCATION_CHANGE';
+export const INCREMENT_REQUESTED = "INCREMENT_REQUESTED";
+export const INCREMENT = "INCREMENT";
+export const DECREMENT_REQUESTED = "DECREMENT_REQUESTED";
+export const DECREMENT = "DECREMENT";

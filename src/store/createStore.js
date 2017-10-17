@@ -1,41 +1,35 @@
-import { applyMiddleware, compose, createStore as createReduxStore } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
+import { routerMiddleware } from "react-router-redux";
 import thunk from "redux-thunk";
-import { browserHistory } from "react-router";
-import { updateLocation } from "redux/modules/location";
-import makeRootReducer from "./reducers";
+import createHistory from "history/createBrowserHistory";
+import rootReducer from "./reducers";
 
-const createStore = (initialState = {}) => {
-	const middleware = [thunk];
-	const enhancers = [];
+export const history = createHistory();
 
-	if (process.env.NODE_ENV === "development") {
-		const devToolsExtension = window.devToolsExtension;
-		if (typeof devToolsExtension === "function") {
-			enhancers.push(devToolsExtension());
-		}
+const initialState = {};
+const enhancers = [];
+const middleware = [
+	thunk,
+	routerMiddleware(history)
+];
+
+if (process.env.NODE_ENV === "development") {
+	const devToolsExtension = window.devToolsExtension;
+
+	if (typeof devToolsExtension === "function") {
+		enhancers.push(devToolsExtension());
 	}
+}
 
-	const store = createReduxStore(
-		makeRootReducer(),
-		initialState,
-		compose(
-			applyMiddleware(...middleware),
-			...enhancers
-		)
-	);
-	store.asyncReducers = {};
+const composedEnhancers = compose(
+	applyMiddleware(...middleware),
+	...enhancers
+);
 
-	// Uncomment to handle history change in store
-	store.unsubscribeHistory = browserHistory.listen(updateLocation(store));
+const store = createStore(
+	rootReducer,
+	initialState,
+	composedEnhancers
+);
 
-	if (module.hot) {
-		module.hot.accept("./reducers", () => {
-			const reducers = require("./reducers").default;
-			store.replaceReducer(reducers(store.asyncReducers));
-		});
-	}
-
-	return store;
-};
-
-export default createStore;
+export default store;
