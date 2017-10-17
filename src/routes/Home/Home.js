@@ -1,14 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { push } from "react-router-redux";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import {
-	increment,
-	incrementAsync,
-	decrement,
-	decrementAsync
-} from "reducers/counter";
+import { actionCreators } from "redux/modules/counter";
 import "./Home.styl";
 
 
@@ -61,21 +55,11 @@ Home.propTypes = {
 	changePage: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-	count: state.counter.count,
-	isIncrementing: state.counter.isIncrementing,
-	isDecrementing: state.counter.isDecrementing
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-	increment,
-	incrementAsync,
-	decrement,
-	decrementAsync,
+export default connect(state => ({
+	count: state.counter.get("count"),
+	isIncrementing: state.counter.get("isIncrementing"),
+	isDecrementing: state.counter.get("isDecrementing")
+}), {
+	...actionCreators,
 	changePage: () => push("/about-us")
-}, dispatch);
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Home);
+})(Home);
