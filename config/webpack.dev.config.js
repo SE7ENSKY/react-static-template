@@ -45,6 +45,25 @@ const devConfig = {
 				]
 			},
 			{
+				test: /\.(sass|scss)$/,
+				use: [
+					"style-loader",
+					"css-loader",
+					{
+						loader: "postcss-loader",
+						options: postcssLoaderOptions
+					},
+					{
+						loader: "resolve-url-loader",
+						options: { includeRoot: true }
+					},
+					{
+						loader: "sass-loader",
+						options: { sourceMap: true }
+					}
+				]
+			},
+			{
 				test: /\.styl$/,
 				use: [
 					"style-loader",
@@ -55,7 +74,7 @@ const devConfig = {
 					},
 					{
 						loader: "resolve-url-loader",
-						options: { includeRoot: true}
+						options: { includeRoot: true }
 					},
 					stylusLoader
 				]

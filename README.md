@@ -30,6 +30,7 @@ Beta :alien:
 24. service worker (currently in development)
 24. react-lazyload
 25. Async Routing (currently in development)
+26. SASS
 ```
 
 **Requirements**

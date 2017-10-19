@@ -119,6 +119,27 @@ const prodConfig = {
 				})
 			},
 			{
+				test: /\.(sass|scss)$/,
+				use: ExtractTextPlugin.extract({
+					use: [
+						"css-loader",
+						{
+							loader: "postcss-loader",
+							options: postcssLoaderOptions
+						},
+						{
+							loader: "resolve-url-loader",
+							options: { includeRoot: true }
+						},
+						{
+							loader: "sass-loader",
+							options: { sourceMap: true }
+						}
+					],
+					fallback: "style-loader"
+				})
+			},
+			{
 				test: /\.styl$/,
 				use: ExtractTextPlugin.extract({
 					use: [
