@@ -123,14 +123,11 @@ const baseConfig = {
 			".mp4"
 		],
 		alias: {
-			actions: join(PROJECT_ROOT, "src", "actions"),
 			components: join(PROJECT_ROOT, "src", "components"),
 			containers: join(PROJECT_ROOT, "src", "containers"),
 			decorators: join(PROJECT_ROOT, "src", "decorators"),
 			layouts: join(PROJECT_ROOT, "src", "layouts"),
-			reducers: join(PROJECT_ROOT, "src", "reducers"),
 			routes: join(PROJECT_ROOT, "src", "routes"),
-			selectors: join(PROJECT_ROOT, "src", "selectors"),
 			static: join(PROJECT_ROOT, "src", "static"),
 			f: join(PROJECT_ROOT, "src", "static", "f"),
 			i: join(PROJECT_ROOT, "src", "static", "i"),

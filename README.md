@@ -127,7 +127,6 @@ react-static-template
 │   │   ├── middleware
 │   │   └── modules
 │   ├── routes
-│   ├── selectors
 │   ├── static
 │   │   ├── i
 │   │   │   └── favicons
