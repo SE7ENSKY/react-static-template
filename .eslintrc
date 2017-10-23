@@ -13,7 +13,7 @@
   "rules": {
     "indent": ["error", "tab"],
     "no-tabs": 0,
-    "quotes": ["error", "double"],
+    "quotes": ["error", "single"],
     "comma-dangle": ["error", "only-multiline"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-indent": [2, "tab"],
