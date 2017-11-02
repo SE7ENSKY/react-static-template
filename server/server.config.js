@@ -56,7 +56,7 @@ if (process.env.NODE_ENV === "development") {
 			res.write(middleware.fileSystem.readFileSync(join(webpackBaseConfig.baseConfig.output.path, "index.html")));
 			res.end();
 		});
-		app.listen(port, "localhost", function onStart(err) {
+		app.listen(port, "0.0.0.0", function onStart(err) {
 			if (err) console.log(err);
 			console.info("Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port);
 		});
@@ -75,7 +75,7 @@ if (process.env.NODE_ENV === "development") {
 		app.get("*", function response(req, res) {
 			res.sendFile(join(webpackBaseConfig.baseConfig.output.path, "index.html"));
 		});
-		app.listen(port, "localhost", function onStart(err) {
+		app.listen(port, "0.0.0.0", function onStart(err) {
 			if (err) console.log(err);
 			console.log("webpack: Compiled successfully.");
 			console.info("Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port);
