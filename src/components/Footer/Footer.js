@@ -1,8 +1,8 @@
-import React from "react";
-import "./Footer.styl";
+import React from 'react';
+import './Footer.styl';
 
 const Footer = () => (
-	<footer className="footer">
+	<footer className='footer'>
 		©Se7ensky 2017-current
 	</footer>
 );

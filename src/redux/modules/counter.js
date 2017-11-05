@@ -3,8 +3,8 @@ import {
 	INCREMENT,
 	DECREMENT_REQUESTED,
 	DECREMENT
-} from "store/constants";
-import { fromJS } from "immutable";
+} from 'store/constants';
+import { fromJS } from 'immutable';
 
 export const increment = () =>
 	(dispatch) => {
@@ -59,17 +59,17 @@ const initialState = fromJS({
 
 const actionHandlers = {
 	[INCREMENT_REQUESTED]: state =>
-		state.set("isIncrementing", true),
+		state.set('isIncrementing', true),
 	[INCREMENT]: state =>
 		state
-			.update("count", v => v + 1)
-			.set("isIncrementing", false),
+			.update('count', v => v + 1)
+			.set('isIncrementing', false),
 	[DECREMENT_REQUESTED]: state =>
-		state.set("isDecrementing", true),
+		state.set('isDecrementing', true),
 	[DECREMENT]: state =>
 		state
-			.update("count", v => v - 1)
-			.set("isDecrementing", false)
+			.update('count', v => v - 1)
+			.set('isDecrementing', false)
 };
 
 function reducer(state = initialState, action) {

@@ -1,9 +1,9 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { push } from "react-router-redux";
-import { connect } from "react-redux";
-import { actionCreators } from "redux/modules/counter";
-import "./Home.styl";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { push } from 'react-router-redux';
+import { connect } from 'react-redux';
+import { actionCreators } from 'redux/modules/counter';
+import './Home.styl';
 
 
 const Home = props => (
@@ -56,10 +56,10 @@ Home.propTypes = {
 };
 
 export default connect(state => ({
-	count: state.counter.get("count"),
-	isIncrementing: state.counter.get("isIncrementing"),
-	isDecrementing: state.counter.get("isDecrementing")
+	count: state.counter.get('count'),
+	isIncrementing: state.counter.get('isIncrementing'),
+	isDecrementing: state.counter.get('isDecrementing')
 }), {
 	...actionCreators,
-	changePage: () => push("/about-us")
+	changePage: () => push('/about-us')
 })(Home);

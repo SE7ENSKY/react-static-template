@@ -31,6 +31,7 @@ Beta :alien:
 24. react-lazyload
 25. Async Routing (currently in development)
 26. SASS
+27. Webpack Visualizer
 ```
 
 **Requirements**
@@ -61,7 +62,7 @@ yarn start
 npm run start
 ```
 ```
-// only for production, server on localhost:8080
+// only for production, server on localhost:8080, bundle visualizer on bundle-statistics.html
 // yarn
 yarn prod
 
