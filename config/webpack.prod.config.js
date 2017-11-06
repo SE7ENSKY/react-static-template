@@ -7,6 +7,7 @@ const cssNano = require('cssnano');
 const StylesPostprocessorPlugin = require('styles-postprocessor-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
+const OfflinePlugin = require('offline-plugin');
 const BeautifyHtmlPlugin = require('beautify-html-plugin');
 const {
 	optimize: {
@@ -208,6 +209,15 @@ if (!process.env.TIMESTAMP) {
 if (process.env.SOURCEMAP) {
 	prodConfig.plugins.push(new Visualizer({
 		filename: './bundle-statistics.html'
+	}));
+}
+
+if (process.env.NODE_ENV === 'production') {
+	prodConfig.plugins.push(new OfflinePlugin({
+		excludes: [
+			'**/*.map',
+			'**/bundle-statistics.html'
+		]
 	}));
 }
 

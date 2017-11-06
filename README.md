@@ -26,12 +26,11 @@ Beta :alien:
 21. Critical CSS (currently in development)
 22. axios
 23. immutable
-24. react-lazyload
-24. service worker (currently in development)
-24. react-lazyload
-25. Async Routing (currently in development)
-26. SASS
-27. Webpack Visualizer
+24. Service Worker
+25. react-lazyload
+26. Async Routing (currently in development)
+27. SASS
+28. Webpack Visualizer
 ```
 
 **Requirements**
