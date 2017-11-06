@@ -19,6 +19,6 @@ if (module.hot) {
 	module.hot.accept('containers/App', () => initRender());
 }
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
 	OfflinePluginRuntime.install();
 }
