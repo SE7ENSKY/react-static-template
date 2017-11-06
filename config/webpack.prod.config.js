@@ -217,7 +217,13 @@ if (process.env.NODE_ENV === 'production') {
 		excludes: [
 			'**/*.map',
 			'**/bundle-statistics.html'
-		]
+		],
+		ServiceWorker: {
+			navigateFallbackURL: '/',
+			events: true,
+			minify: true
+		},
+		AppCache: false
 	}));
 }
 
