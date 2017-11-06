@@ -26,7 +26,7 @@ Beta :alien:
 21. Critical CSS (currently in development)
 22. axios
 23. immutable
-24. Service Worker
+24. Service Worker (HTTPS protocol needed)
 25. react-lazyload
 26. Async Routing (currently in development)
 27. SASS
