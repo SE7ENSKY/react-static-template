@@ -214,6 +214,13 @@ if (process.env.SOURCEMAP) {
 
 if (process.env.NODE_ENV === 'production') {
 	prodConfig.plugins.push(new OfflinePlugin({
+		caches: {
+			main: [
+				'index.html',
+				'**/*.js',
+				'**/*.css'
+			]
+		},
 		excludes: [
 			'**/*.map',
 			'**/bundle-statistics.html'
