@@ -218,7 +218,6 @@ const baseConfig = {
 				from: 'src/static',
 				to: 'assets',
 				ignore: [
-					'i/*',
 					'v/*',
 					'f/*',
 					'*.js',
