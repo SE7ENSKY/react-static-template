@@ -135,7 +135,8 @@ const baseConfig = {
 			v: join(PROJECT_ROOT, 'src', 'static', 'v'),
 			store: join(PROJECT_ROOT, 'src', 'store'),
 			styles: join(PROJECT_ROOT, 'src', 'styles'),
-			utils: join(PROJECT_ROOT, 'src', 'utils')
+			utils: join(PROJECT_ROOT, 'src', 'utils'),
+			modernizr: join(PROJECT_ROOT, '.modernizrrc'),
 		}
 	},
 	module: {
@@ -257,4 +258,3 @@ module.exports = {
 	postcssLoaderOptions,
 	stylusLoader
 };
-
