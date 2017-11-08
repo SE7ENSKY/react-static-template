@@ -2,47 +2,49 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
-import { actionCreators } from 'redux/modules/counter';
+import { actionCreators } from 'reducers/modules/counter';
 import './Home.styl';
 
 
-const Home = props => (
-	<div>
-		<h1>Home</h1>
-		<p>Count: {props.count}</p>
-		<p>
-			<button
-				onClick={props.increment}
-				disabled={props.isIncrementing}
-			>
-				Increment
-			</button>
-			<button
-				onClick={props.incrementAsync}
-				disabled={props.isIncrementing}
-			>
-				Increment Async
-			</button>
-		</p>
-		<p>
-			<button
-				onClick={props.decrement}
-				disabled={props.isDecrementing}
-			>
-				Decrementing
-			</button>
-			<button
-				onClick={props.decrementAsync}
-				disabled={props.isDecrementing}
-			>
-				Decrement Async
-			</button>
-		</p>
-		<p>
-			<button onClick={() => props.changePage()}>Go to about page via redux</button>
-		</p>
-	</div>
-);
+function Home(props) {
+	return (
+		<div>
+			<h1>Home</h1>
+			<p>Count: {props.count}</p>
+			<p>
+				<button
+					onClick={props.increment}
+					disabled={props.isIncrementing}
+				>
+					Increment
+				</button>
+				<button
+					onClick={props.incrementAsync}
+					disabled={props.isIncrementing}
+				>
+					Increment Async
+				</button>
+			</p>
+			<p>
+				<button
+					onClick={props.decrement}
+					disabled={props.isDecrementing}
+				>
+					Decrementing
+				</button>
+				<button
+					onClick={props.decrementAsync}
+					disabled={props.isDecrementing}
+				>
+					Decrement Async
+				</button>
+			</p>
+			<p>
+				<button onClick={() => props.changePage()}>Go to about page via redux</button>
+			</p>
+		</div>
+	);
+}
 
 Home.propTypes = {
 	count: PropTypes.number.isRequired,

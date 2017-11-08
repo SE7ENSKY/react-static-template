@@ -117,6 +117,8 @@ const baseConfig = {
 			'.json',
 			'.css',
 			'.styl',
+			'.sass',
+			'.scss',
 			'.png',
 			'.jpg',
 			'.jpeg',
@@ -128,6 +130,7 @@ const baseConfig = {
 			containers: join(PROJECT_ROOT, 'src', 'containers'),
 			decorators: join(PROJECT_ROOT, 'src', 'decorators'),
 			layouts: join(PROJECT_ROOT, 'src', 'layouts'),
+			reducers: join(PROJECT_ROOT, 'src', 'reducers'),
 			routes: join(PROJECT_ROOT, 'src', 'routes'),
 			static: join(PROJECT_ROOT, 'src', 'static'),
 			f: join(PROJECT_ROOT, 'src', 'static', 'f'),
@@ -136,7 +139,7 @@ const baseConfig = {
 			store: join(PROJECT_ROOT, 'src', 'store'),
 			styles: join(PROJECT_ROOT, 'src', 'styles'),
 			utils: join(PROJECT_ROOT, 'src', 'utils'),
-			modernizr: join(PROJECT_ROOT, '.modernizrrc'),
+			modernizr$: join(PROJECT_ROOT, '.modernizrrc')
 		}
 	},
 	module: {
@@ -218,6 +221,7 @@ const baseConfig = {
 				from: 'src/static',
 				to: 'assets',
 				ignore: [
+					// 'i/*',
 					'v/*',
 					'f/*',
 					'*.js',

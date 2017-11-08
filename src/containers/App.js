@@ -5,12 +5,15 @@ import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from 'store/createStore';
 import CoreLayout from 'layouts/CoreLayout';
 
-const App = () => (
-	<Provider store={store}>
-		<ConnectedRouter history={history}>
-			<Route path='/' component={CoreLayout} />
-		</ConnectedRouter>
-	</Provider>
-);
+
+function App() {
+	return (
+		<Provider store={store}>
+			<ConnectedRouter history={history}>
+				<Route path='/' component={CoreLayout} />
+			</ConnectedRouter>
+		</Provider>
+	);
+}
 
 export default App;

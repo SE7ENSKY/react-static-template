@@ -1,7 +1,10 @@
-import { required, email } from "redux-form-validators";
+import {
+	required,
+	email
+} from 'redux-form-validators';
 
 const validations = {
-	"contact-form": {
+	'contact-form': {
 		name: [required()],
 		email: [required(), email()],
 		description: [required()],
