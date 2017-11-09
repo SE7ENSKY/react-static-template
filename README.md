@@ -22,16 +22,16 @@ Beta :alien:
 17. redux-thunk
 18. react-router
 19. yarn
-20. Modernizr ([modernizr-loader](https://github.com/peerigon/modernizr-loader))
+20. Modernizr (modernizr-loader)
 21. Critical CSS (currently in development)
 22. axios
 23. immutable
 24. Service Worker (HTTPS protocol needed)
 25. react-lazyload
-26. Async Routing ([react-loadable](https://github.com/thejameskyle/react-loadable))
+26. Async Routing (react-loadable)
 27. SASS
 28. Webpack Visualizer
-29. Lazy Loading ([react-lazyload](https://github.com/jasonslyvia/react-lazyload))
+29. Lazy Loading (react-lazyload)
 ```
 
 **Requirements**
