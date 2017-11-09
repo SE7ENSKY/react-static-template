@@ -3,25 +3,47 @@ import {
 	Route,
 	Switch
 } from 'react-router-dom';
-import Header from 'components/Header';
-import Footer from 'components/Footer';
-import Home from 'routes/Home';
-import About from 'routes/About';
+import Loadable from 'react-loadable';
 import 'normalize.css/normalize.css';
 import 'styles/main.styl';
 
 
+const LoadableHeader = Loadable({
+	loader: () => import('components/Header'),
+	loading() {
+		return (<div>Loading...</div>);
+	}
+});
+const LoadableFooter = Loadable({
+	loader: () => import('components/Footer'),
+	loading() {
+		return (<div>Loading...</div>);
+	}
+});
+const LoadableHome = Loadable({
+	loader: () => import('routes/Home'),
+	loading() {
+		return (<div>Loading...</div>);
+	}
+});
+const LoadableAbout = Loadable({
+	loader: () => import('routes/About'),
+	loading() {
+		return (<div>Loading...</div>);
+	}
+});
+
 function CoreLayout() {
 	return (
 		<div className='app'>
-			<Header />
+			<LoadableHeader />
 			<div className='main'>
 				<Switch>
-					<Route exact path='/' component={Home}/>
-					<Route exact path='/about-us' component={About}/>
+					<Route exact path='/' component={LoadableHome} />
+					<Route exact path='/about-us' component={LoadableAbout} />
 				</Switch>
 			</div>
-			<Footer />
+			<LoadableFooter />
 		</div>
 	);
 }

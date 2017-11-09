@@ -6,7 +6,7 @@ Beta :alien:
  1. redux-saga
  2. reselect
  3. Redux
- 4. Code splitting
+ 4. Code Splitting
  5. Hot Reloading (even on IE)
  6. axios
  7. Babel/ECMAScript 6+
@@ -22,22 +22,23 @@ Beta :alien:
 17. redux-thunk
 18. react-router
 19. yarn
-20. Modernizr
+20. Modernizr ([modernizr-loader](https://github.com/peerigon/modernizr-loader))
 21. Critical CSS (currently in development)
 22. axios
 23. immutable
 24. Service Worker (HTTPS protocol needed)
 25. react-lazyload
-26. Async Routing (currently in development)
+26. Async Routing ([react-loadable](https://github.com/thejameskyle/react-loadable))
 27. SASS
 28. Webpack Visualizer
+29. Lazy Loading ([react-lazyload](https://github.com/jasonslyvia/react-lazyload))
 ```
 
 **Requirements**
 
 ```
-node: ^7.0.0
-npm: ^4.0.0
+node: ^8.0.0
+npm: ^5.0.0
 ```
 
 **Install**
@@ -123,7 +124,7 @@ react-static-template
 │   │   └── CoreLayout
 │   │       ├── CoreLayout.js
 │   │       └── Index.js
-│   ├── redux
+│   ├── reducers
 │   │   ├── middleware
 │   │   └── modules
 │   ├── routes

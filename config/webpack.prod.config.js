@@ -5,14 +5,14 @@ const cssMQpacker = require('css-mqpacker');
 const perfectionist = require('perfectionist');
 const cssNano = require('cssnano');
 const StylesPostprocessorPlugin = require('styles-postprocessor-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
+// const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const OfflinePlugin = require('offline-plugin');
 const BeautifyHtmlPlugin = require('beautify-html-plugin');
 const {
 	optimize: {
-		UglifyJsPlugin,
-		CommonsChunkPlugin
+		UglifyJsPlugin
+		// CommonsChunkPlugin
 	}
 } = require('webpack');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
@@ -97,7 +97,8 @@ const prodConfig = {
 	},
 	output: {
 		publicPath: '/',
-		filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`
+		filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`,
+		chunkFilename: `assets/[name].chunk${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`
 	},
 	watch: false,
 	devtool: process.env.SOURCEMAP ? 'source-map' : false,
@@ -162,17 +163,17 @@ const prodConfig = {
 		]
 	},
 	plugins: [
-		new ScriptExtHtmlWebpackPlugin({
-			defaultAttribute: 'defer'
-		}),
+		// new ScriptExtHtmlWebpackPlugin({
+		// 	defaultAttribute: 'defer'
+		// }),
 		new BeautifyHtmlPlugin({ ocd: true }),
-		new CommonsChunkPlugin({
-			name: 'main.vendor',
-			filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`,
-			minChunks: (module, count) => /node_modules/.test(module.resource) && count >= 1
-		}),
+		// new CommonsChunkPlugin({
+		// 	name: 'main.vendor',
+		// 	filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`,
+		// 	minChunks: (module, count) => /node_modules/.test(module.resource) && count >= 1
+		// }),
 		new ExtractTextPlugin({
-			filename: 'assets/[name].min.[chunkhash:8].css',
+			filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].css`,
 			allChunks: true
 		}),
 		new StylesPostprocessorPlugin({
@@ -217,7 +218,7 @@ if (process.env.NODE_ENV === 'production') {
 		caches: {
 			main: [
 				'index.html',
-				'**/*.js',
+				'**/main.*.js',
 				'**/*.css'
 			]
 		},

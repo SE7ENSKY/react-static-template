@@ -1,5 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {
+	number,
+	func,
+	bool
+} from 'prop-types';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { actionCreators } from 'reducers/modules/counter';
@@ -47,14 +51,14 @@ function Home(props) {
 }
 
 Home.propTypes = {
-	count: PropTypes.number.isRequired,
-	increment: PropTypes.func.isRequired,
-	incrementAsync: PropTypes.func.isRequired,
-	decrement: PropTypes.func.isRequired,
-	decrementAsync: PropTypes.func.isRequired,
-	isIncrementing: PropTypes.bool.isRequired,
-	isDecrementing: PropTypes.bool.isRequired,
-	changePage: PropTypes.func.isRequired
+	count: number.isRequired,
+	increment: func.isRequired,
+	incrementAsync: func.isRequired,
+	decrement: func.isRequired,
+	decrementAsync: func.isRequired,
+	isIncrementing: bool.isRequired,
+	isDecrementing: bool.isRequired,
+	changePage: func.isRequired
 };
 
 export default connect(state => ({
