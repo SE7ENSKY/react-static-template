@@ -26,8 +26,9 @@ const {
 
 const PROJECT_ROOT = resolve(__dirname, '../');
 const supportedBrowserslist = [
-	'last 4 versions',
-	'ie >= 10'
+	'last 3 versions',
+	'Explorer >= 11',
+	'Safari >= 9'
 ];
 const stylusLoader = {
 	loader: 'stylus-loader',
