@@ -232,12 +232,16 @@ const baseConfig = {
 		new NoEmitOnErrorsPlugin(),
 		new WatchIgnorePlugin([join(PROJECT_ROOT, 'node_modules')]),
 		new HtmlWebpackPlugin({
-			template: './src/index.html',
+			template: './src/index.ejs',
 			filename: 'index.html',
 			hash: false,
 			cache: true,
-			inject: 'body',
-			minify: false
+			inject: false,
+			minify: {
+				removeComments: true,
+				collapseWhitespace: true,
+				minifyJS: false
+			}
 		}),
 		new LoaderOptionsPlugin({
 			options: {

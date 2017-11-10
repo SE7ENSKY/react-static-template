@@ -8,7 +8,6 @@ const StylesPostprocessorPlugin = require('styles-postprocessor-plugin');
 // const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 const OfflinePlugin = require('offline-plugin');
-const BeautifyHtmlPlugin = require('beautify-html-plugin');
 const {
 	optimize: {
 		UglifyJsPlugin
@@ -166,7 +165,6 @@ const prodConfig = {
 		// new ScriptExtHtmlWebpackPlugin({
 		// 	defaultAttribute: 'defer'
 		// }),
-		new BeautifyHtmlPlugin({ ocd: true }),
 		// new CommonsChunkPlugin({
 		// 	name: 'main.vendor',
 		// 	filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`,
@@ -217,9 +215,8 @@ if (process.env.NODE_ENV === 'production') {
 	prodConfig.plugins.push(new OfflinePlugin({
 		caches: {
 			main: [
-				'index.html',
 				'**/main.*.js',
-				'**/*.css'
+				'**/main.*.css'
 			]
 		},
 		excludes: [

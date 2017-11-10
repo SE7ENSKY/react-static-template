@@ -29,7 +29,6 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-runtime": "^6.26.0",
-    "beautify-html-plugin": "^1.0.0",
     "circular-dependency-plugin": "^4.2.1",
     "clean-webpack-plugin": "^0.1.17",
     "compression": "^1.7.1",
