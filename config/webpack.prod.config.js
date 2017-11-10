@@ -215,6 +215,7 @@ if (process.env.NODE_ENV === 'production') {
 	prodConfig.plugins.push(new OfflinePlugin({
 		caches: {
 			main: [
+				'index.html',
 				'**/main.*.js',
 				'**/main.*.css'
 			]
