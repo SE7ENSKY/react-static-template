@@ -45,6 +45,7 @@ const stylusLoader = {
 };
 const babelPlugins = [
 	'lodash',
+	'transform-decorators',
 	'syntax-dynamic-import',
 	'dynamic-import-webpack',
 	'transform-class-properties',

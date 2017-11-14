@@ -70,7 +70,7 @@ const cssnanoMinConfig = {
 };
 const stylesPostprocessorPlugins = [
 	cssMQpacker(),
-	cssNano(merge(cssnanoBaseConfig, process.env.BEAUTIFY ? {} : cssnanoMinConfig))
+	cssNano(merge({}, cssnanoBaseConfig, process.env.BEAUTIFY ? {} : cssnanoMinConfig))
 ];
 if (process.env.BEAUTIFY) {
 	stylesPostprocessorPlugins.push(perfectionist({
