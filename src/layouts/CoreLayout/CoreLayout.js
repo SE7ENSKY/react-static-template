@@ -4,6 +4,7 @@ import {
 	Switch
 } from 'react-router-dom';
 import Loadable from 'react-loadable';
+import ComponentsContainer from 'containers/ComponentsContainer';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import 'normalize.css/normalize.css';
@@ -30,7 +31,7 @@ const LoadableAbout = Loadable({
 
 function CoreLayout() {
 	return (
-		<div className='app'>
+		<ComponentsContainer>
 			<Header />
 			<div className='main'>
 				<Switch>
@@ -39,7 +40,7 @@ function CoreLayout() {
 				</Switch>
 			</div>
 			<Footer />
-		</div>
+		</ComponentsContainer>
 	);
 }
 

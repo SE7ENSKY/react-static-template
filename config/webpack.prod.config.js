@@ -215,15 +215,18 @@ if (process.env.NODE_ENV === 'production') {
 	prodConfig.plugins.push(new OfflinePlugin({
 		caches: {
 			main: [
-				'index.html',
-				'**/main.*.js',
-				'**/main.*.css'
+				'**/main.*.css',
+				'**/main.*.js'
+			],
+			additional: [
+				'**/*.*'
 			]
 		},
 		excludes: [
 			'**/*.map',
 			'**/bundle-statistics.html'
 		],
+		safeToUseOptionalCaches: true,
 		ServiceWorker: {
 			navigateFallbackURL: '/',
 			events: true,
