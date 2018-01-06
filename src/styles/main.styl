@@ -2,6 +2,12 @@
 @import 'helpers.styl'
 
 
+*
+	box-sizing border-box
+	&:before
+	&:after
+		box-sizing border-box
+
 html
 body
 	margin 0
@@ -28,4 +34,5 @@ body
 	color siteColor
 
 img
+.image-render
 	image-rendering -webkit-optimize-contrast
