@@ -1,3 +1,7 @@
-import About from './About';
+import Loadable from 'react-loadable';
+import LoadingComponent from 'components/LoadingComponent';
 
-export default About;
+export default Loadable({
+	loader: () => import('./About'),
+	loading: LoadingComponent,
+});
