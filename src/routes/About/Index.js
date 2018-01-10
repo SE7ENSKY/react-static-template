@@ -1,7 +1,3 @@
-import Loadable from 'react-loadable';
-import LoadingComponent from 'components/LoadingComponent';
+import AboutContainer from './container/AboutContainer';
 
-export default Loadable({
-	loader: () => import('./About'),
-	loading: LoadingComponent,
-});
+export default AboutContainer;
