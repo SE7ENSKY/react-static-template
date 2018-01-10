@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { InputField, TextareaField } from 'components/Form';
 import { TEXT, EMAIL, CONTACT_FORM } from 'store/constants';
@@ -8,7 +8,7 @@ import validateForm from 'utils/validateForm';
 class ContactForm extends Component {
 	static propTypes = {
 		handleSubmit: func.isRequired,
-		submitting: func.isRequired,
+		submitting: bool.isRequired,
 	};
 
 	handleDataSubmit = data => validateForm(CONTACT_FORM, data)
