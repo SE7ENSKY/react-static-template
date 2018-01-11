@@ -5,16 +5,21 @@ import classNames from 'classnames';
 const InputField = (props) => {
 	const {
 		input,
-		meta,
+		meta: {
+			touched,
+			error,
+			active,
+		},
 		type,
 		placeholder,
 	} = props;
+	const hasError = touched && error && !active;
 
 	return (
 		<div className='form-control'>
 			<input
 				className={classNames('form-control__input', {
-					'form-control__input_error': meta.touched && meta.error && !meta.active,
+					'form-control__input_error': hasError,
 				})}
 				id={`field-${input.name}`}
 				{...input}
@@ -22,8 +27,8 @@ const InputField = (props) => {
 				type={type}
 			/>
 			{
-				meta.touched && meta.error && !meta.active &&
-				<span className='form-control__error'>{meta.error}</span>
+				hasError &&
+				<span className='form-control__error'>{error}</span>
 			}
 		</div>
 	);

@@ -3,21 +3,30 @@ import { shape, string, bool } from 'prop-types';
 import classNames from 'classnames';
 
 const TextareaField = (props) => {
-	const { input, meta, placeholder } = props;
+	const {
+		input,
+		meta: {
+			touched,
+			error,
+			active,
+		},
+		placeholder
+	} = props;
+	const hasError = touched && error && !active;
 
 	return (
 		<div className='form-control'>
 			<textarea
 				className={classNames('form-control__textarea', {
-					'form-control__textarea_error': meta.touched && meta.error && !meta.active,
+					'form-control__textarea_error': hasError,
 				})}
 				id={`field-${input.name}`}
 				{...input}
 				placeholder={placeholder}
 			/>
 			{
-				meta.touched && meta.error && !meta.active &&
-				<span className='form-control__error'>{meta.error}</span>
+				hasError &&
+				<span className='form-control__error'>{error}</span>
 			}
 		</div>
 	);
