@@ -70,18 +70,13 @@ const babelLoader = {
 		]
 	}
 };
-if (process.env.NODE_ENV === 'development') {
-	babelPlugins.unshift('react-hot-loader/babel');
-}
 const postcssLoaderOptions = {
 	sourceMap: true,
 	config: {
 		path: join(PROJECT_ROOT, 'config', 'postcss.config.js'),
 		ctx: {
-			cssnext: {
-				autoprefixer: {
-					browsers: supportedBrowserslist
-				}
+			autoprefixer: {
+				browsers: supportedBrowserslist
 			}
 		}
 	}

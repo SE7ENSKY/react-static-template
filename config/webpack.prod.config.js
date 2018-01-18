@@ -7,7 +7,7 @@ const cssNano = require('cssnano');
 const StylesPostprocessorPlugin = require('styles-postprocessor-plugin');
 // const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
-const OfflinePlugin = require('offline-plugin');
+// const OfflinePlugin = require('offline-plugin');
 const {
 	optimize: {
 		UglifyJsPlugin
@@ -211,29 +211,29 @@ if (process.env.SOURCEMAP) {
 	}));
 }
 
-if (process.env.NODE_ENV === 'production') {
-	prodConfig.plugins.push(new OfflinePlugin({
-		caches: {
-			main: [
-				'**/main.*.css',
-				'**/main.*.js'
-			],
-			additional: [
-				'**/*.*'
-			]
-		},
-		excludes: [
-			'**/*.map',
-			'**/bundle-statistics.html'
-		],
-		safeToUseOptionalCaches: true,
-		ServiceWorker: {
-			navigateFallbackURL: '/',
-			events: true,
-			minify: true
-		},
-		AppCache: false
-	}));
-}
+// if (process.env.NODE_ENV === 'production') {
+// 	prodConfig.plugins.push(new OfflinePlugin({
+// 		caches: {
+// 			main: [
+// 				'**/main.*.css',
+// 				'**/main.*.js'
+// 			],
+// 			additional: [
+// 				'**/*.*'
+// 			]
+// 		},
+// 		excludes: [
+// 			'**/*.map',
+// 			'**/bundle-statistics.html'
+// 		],
+// 		safeToUseOptionalCaches: true,
+// 		ServiceWorker: {
+// 			navigateFallbackURL: '/',
+// 			events: true,
+// 			minify: true
+// 		},
+// 		AppCache: false
+// 	}));
+// }
 
 module.exports = configMerge(baseConfig, prodConfig);

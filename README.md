@@ -3,35 +3,24 @@ Beta :alien:
 
 **Features**
 ```
- 1. redux-saga
- 2. reselect
- 3. Redux
- 4. Code Splitting
- 5. Hot Reloading (even on IE)
- 6. axios
- 7. Babel/ECMAScript 6+
- 8. ESLint
- 9. nodemon
-10. express
-11. stylus/nib
-12. autoprefixer
-13. Jest
-14. enzyme
-15. CSS MQPacker
-16. react-router-redux
-17. redux-thunk
-18. react-router
-19. yarn
-20. Modernizr (modernizr-loader)
-21. Critical CSS (webpack-plugin-critical)
-22. axios
-23. immutable
-24. Service Worker (offline-plugin, HTTPS protocol needed)
-25. react-lazyload
-26. Async Routing (react-loadable)
-27. SASS
-28. Webpack Visualizer
-29. Lazy Loading (react-lazyload)
+ 1. Redux
+ 2. Code Splitting
+ 3. Hot Reloading (even on IE)
+ 4. Babel/ECMAScript 6+
+ 5. ESLint
+ 6. nodemon
+ 7. express
+ 8. stylus/nib
+ 9. autoprefixer
+10. Jest
+11. CSS MQPacker
+12. react-router-redux
+13. yarn
+14. Modernizr (modernizr-loader)
+15. Service Worker (offline-plugin, HTTPS protocol needed)
+16. Async Routing (react-loadable)
+17. SASS
+18. Webpack Visualizer
 ```
 
 **Requirements**
@@ -118,8 +107,8 @@ react-static-template
 ├── dist
 ├── src
 │   ├── components
+│   ├── configurations
 │   ├── containers
-│   ├── decorators
 │   ├── layouts
 │   │   └── CoreLayout
 │   │       ├── CoreLayout.js
