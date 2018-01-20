@@ -189,6 +189,8 @@ if (!process.env.BEAUTIFY) {
 			screw_ie8: true
 		},
 		comments: false,
+		cache: true,
+		parallel: true,
 		compress: {
 			screw_ie8: true,
 			unused: true,
