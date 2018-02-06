@@ -4,23 +4,20 @@ const { merge } = require('lodash');
 const cssMQpacker = require('css-mqpacker');
 const perfectionist = require('perfectionist');
 const cssNano = require('cssnano');
+const HappyPack = require('happypack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const StylesPostprocessorPlugin = require('styles-postprocessor-plugin');
 // const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 // const OfflinePlugin = require('offline-plugin');
-const {
-	optimize: {
-		UglifyJsPlugin
-		// CommonsChunkPlugin
-	}
-} = require('webpack');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const {
 	PROJECT_ROOT,
 	baseConfig,
+	happyThreadPool,
 	postcssLoaderOptions,
-	stylusLoader
+	stylusLoaderOptions
 } = require('./webpack.base.config');
 
 const cssnanoBaseConfig = {
@@ -64,7 +61,7 @@ const cssnanoBaseConfig = {
 };
 const cssnanoMinConfig = {
 	discardComments: {
-		removeAll: true
+		removeAllButFirst: true
 	},
 	normalizeWhitespace: true
 };
@@ -106,56 +103,21 @@ const prodConfig = {
 			{
 				test: /\.css$/,
 				use: ExtractTextPlugin.extract({
-					use: [
-						'css-loader',
-						{
-							loader: 'postcss-loader',
-							options: postcssLoaderOptions
-						},
-						{
-							loader: 'resolve-url-loader',
-							options: { includeRoot: true }
-						}
-					],
+					use: 'happypack/loader?id=css',
 					fallback: 'style-loader'
 				})
 			},
 			{
 				test: /\.(sass|scss)$/,
 				use: ExtractTextPlugin.extract({
-					use: [
-						'css-loader',
-						{
-							loader: 'postcss-loader',
-							options: postcssLoaderOptions
-						},
-						{
-							loader: 'resolve-url-loader',
-							options: { includeRoot: true }
-						},
-						{
-							loader: 'sass-loader',
-							options: { sourceMap: true }
-						}
-					],
+					use: 'happypack/loader?id=sass',
 					fallback: 'style-loader'
 				})
 			},
 			{
 				test: /\.styl$/,
 				use: ExtractTextPlugin.extract({
-					use: [
-						'css-loader',
-						{
-							loader: 'postcss-loader',
-							options: postcssLoaderOptions
-						},
-						{
-							loader: 'resolve-url-loader',
-							options: { includeRoot: true }
-						},
-						stylusLoader
-					],
+					use: 'happypack/loader?id=styl',
 					fallback: 'style-loader'
 				})
 			}
@@ -165,11 +127,6 @@ const prodConfig = {
 		// new ScriptExtHtmlWebpackPlugin({
 		// 	defaultAttribute: 'defer'
 		// }),
-		// new CommonsChunkPlugin({
-		// 	name: 'main.vendor',
-		// 	filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`,
-		// 	minChunks: (module, count) => /node_modules/.test(module.resource) && count >= 1
-		// }),
 		new ExtractTextPlugin({
 			filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].css`,
 			allChunks: true
@@ -178,6 +135,62 @@ const prodConfig = {
 			root: PROJECT_ROOT,
 			output: baseConfig.output.path,
 			plugins: stylesPostprocessorPlugins
+		}),
+		new HappyPack({
+			id: 'css',
+			verbose: false,
+			threadPool: happyThreadPool,
+			loaders: [
+				'css-loader',
+				{
+					path: 'postcss-loader',
+					query: postcssLoaderOptions
+				},
+				{
+					path: 'resolve-url-loader',
+					query: { includeRoot: true }
+				}
+			]
+		}),
+		new HappyPack({
+			id: 'sass',
+			verbose: false,
+			threadPool: happyThreadPool,
+			loaders: [
+				'css-loader',
+				{
+					path: 'postcss-loader',
+					query: postcssLoaderOptions
+				},
+				{
+					path: 'resolve-url-loader',
+					query: { includeRoot: true }
+				},
+				{
+					path: 'sass-loader',
+					query: { sourceMap: true }
+				}
+			]
+		}),
+		new HappyPack({
+			id: 'styl',
+			verbose: false,
+			threadPool: happyThreadPool,
+			loaders: [
+				'css-loader',
+				{
+					path: 'postcss-loader',
+					query: postcssLoaderOptions
+				},
+				{
+					path: 'resolve-url-loader',
+					query: { includeRoot: true }
+				},
+				{
+					path: 'stylus-loader',
+					query: stylusLoaderOptions
+				}
+			]
 		})
 	]
 };
@@ -185,17 +198,14 @@ const prodConfig = {
 if (!process.env.BEAUTIFY) {
 	prodConfig.plugins.push(new UglifyJsPlugin({
 		sourceMap: true,
-		mangle: {
-			screw_ie8: true
-		},
-		comments: false,
-		cache: true,
+		cache: false,
 		parallel: true,
-		compress: {
-			screw_ie8: true,
-			unused: true,
-			dead_code: true,
-			warnings: false
+		uglifyOptions: {
+			ie8: false,
+			ecma: 8,
+			output: {
+				comments: (node, comment) => comment.value === '!\n * \n * @version: 1.0.0\n * \n * @author: SE7ENSKY Frontend studio <info@se7ensky.com>\n * \n '
+			}
 		}
 	}));
 }

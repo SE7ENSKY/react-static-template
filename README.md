@@ -1,5 +1,4 @@
 # React Static Template
-Beta :alien:
 
 **Features**
 ```
@@ -20,7 +19,8 @@ Beta :alien:
 15. Service Worker (offline-plugin, HTTPS protocol needed)
 16. Async Routing (react-loadable)
 17. SASS
-18. Webpack Visualizer
+18. happypack
+19. Webpack Visualizer
 ```
 
 **Requirements**

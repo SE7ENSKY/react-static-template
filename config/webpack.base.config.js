@@ -14,6 +14,8 @@ const {
 	join
 } = require('path');
 const { readFileSync } = require('fs');
+const HappyPack = require('happypack');
+const happyThreadPool = HappyPack.ThreadPool({ size: 4 });
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -21,7 +23,8 @@ const {
 	NoEmitOnErrorsPlugin,
 	WatchIgnorePlugin,
 	DefinePlugin,
-	LoaderOptionsPlugin
+	LoaderOptionsPlugin,
+	BannerPlugin
 } = require('webpack');
 
 const PROJECT_ROOT = resolve(__dirname, '../');
@@ -30,45 +33,15 @@ const supportedBrowserslist = [
 	'Explorer >= 11',
 	'Safari >= 9'
 ];
-const stylusLoader = {
-	loader: 'stylus-loader',
-	options: {
-		sourceMap: true,
-		use: nib(),
-		import: [
-			join(PROJECT_ROOT, 'src', 'styles', 'variables.styl'),
-			join(PROJECT_ROOT, 'src', 'styles', 'mixins.styl'),
-			getModifiedNib(require.resolve('verstat-nib'))
-		],
-		preferPathResolver: 'webpack'
-	}
-};
-const babelPlugins = [
-	'lodash',
-	'transform-decorators',
-	'syntax-dynamic-import',
-	'dynamic-import-webpack',
-	'transform-class-properties',
-	'transform-runtime',
-	'transform-object-rest-spread'
-];
-const babelLoader = {
-	loader: 'babel-loader',
-	options: {
-		cacheDirectory: true,
-		babelrc: false,
-		plugins: babelPlugins,
-		presets: [
-			'react',
-			[
-				'env',
-				{
-					targets: { browsers: supportedBrowserslist },
-					modules: false
-				}
-			]
-		]
-	}
+const stylusLoaderOptions = {
+	sourceMap: true,
+	use: nib(),
+	import: [
+		join(PROJECT_ROOT, 'src', 'styles', 'variables.styl'),
+		join(PROJECT_ROOT, 'src', 'styles', 'mixins.styl'),
+		getModifiedNib(require.resolve('verstat-nib'))
+	],
+	preferPathResolver: 'webpack'
 };
 const postcssLoaderOptions = {
 	sourceMap: true,
@@ -181,19 +154,16 @@ const baseConfig = {
 			},
 			{
 				test: /\.json$/,
-				use: 'json-loader'
+				use: 'happypack/loader?id=json'
 			},
 			{
 				test: /\.html$/,
-				use: {
-					loader: 'html-loader',
-					options: { attrs: ['img:src', 'link:href'] }
-				}
+				use: 'happypack/loader?id=html'
 			},
 			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
-				use: [babelLoader]
+				use: 'happypack/loader?id=js'
 			}
 		]
 	},
@@ -201,10 +171,13 @@ const baseConfig = {
 		new DefinePlugin({
 			'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) }
 		}),
+		new BannerPlugin({
+			banner: '\n' + '@version: 1.0.0' + '\n\n' + '@author: SE7ENSKY Frontend studio <info@se7ensky.com>\n'
+		}),
 		new CleanWebpackPlugin(
 			[
-				'dist',
-				'coverage'
+				'dist'
+				// 'coverage'
 			],
 			{
 				root: PROJECT_ROOT,
@@ -252,6 +225,54 @@ const baseConfig = {
 					);
 				}
 			}
+		}),
+		new HappyPack({
+			id: 'json',
+			verbose: false,
+			threadPool: happyThreadPool,
+			loaders: ['json-loader']
+		}),
+		new HappyPack({
+			id: 'html',
+			verbose: false,
+			threadPool: happyThreadPool,
+			loaders: [{
+				path: 'html-loader',
+				query: { attrs: ['img:src', 'link:href'] }
+			}]
+		}),
+		new HappyPack({
+			id: 'js',
+			verbose: false,
+			threadPool: happyThreadPool,
+			loaders: [
+				{
+					path: 'babel-loader',
+					query: {
+						cacheDirectory: true,
+						babelrc: false,
+						plugins: [
+							'lodash',
+							'transform-decorators',
+							'syntax-dynamic-import',
+							'dynamic-import-webpack',
+							'transform-class-properties',
+							'transform-runtime',
+							'transform-object-rest-spread'
+						],
+						presets: [
+							'react',
+							[
+								'env',
+								{
+									targets: { browsers: supportedBrowserslist },
+									modules: false
+								}
+							]
+						]
+					}
+				}
+			]
 		})
 	]
 };
@@ -259,6 +280,7 @@ const baseConfig = {
 module.exports = {
 	PROJECT_ROOT,
 	baseConfig,
+	happyThreadPool,
 	postcssLoaderOptions,
-	stylusLoader
+	stylusLoaderOptions
 };

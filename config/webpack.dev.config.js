@@ -4,12 +4,14 @@ const {
 	HotModuleReplacementPlugin,
 	NamedModulesPlugin
 } = require('webpack');
+const HappyPack = require('happypack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const {
 	PROJECT_ROOT,
 	baseConfig,
+	happyThreadPool,
 	postcssLoaderOptions,
-	stylusLoader
+	stylusLoaderOptions
 } = require('./webpack.base.config');
 
 const devConfig = {
@@ -29,53 +31,15 @@ const devConfig = {
 		rules: [
 			{
 				test: /\.css$/,
-				use: [
-					'style-loader',
-					'css-loader',
-					{
-						loader: 'postcss-loader',
-						options: postcssLoaderOptions
-					},
-					{
-						loader: 'resolve-url-loader',
-						options: { includeRoot: true }
-					}
-				]
+				use: 'happypack/loader?id=css'
 			},
 			{
 				test: /\.(sass|scss)$/,
-				use: [
-					'style-loader',
-					'css-loader',
-					{
-						loader: 'postcss-loader',
-						options: postcssLoaderOptions
-					},
-					{
-						loader: 'resolve-url-loader',
-						options: { includeRoot: true }
-					},
-					{
-						loader: 'sass-loader',
-						options: { sourceMap: true }
-					}
-				]
+				use: 'happypack/loader?id=sass'
 			},
 			{
 				test: /\.styl$/,
-				use: [
-					'style-loader',
-					'css-loader',
-					{
-						loader: 'postcss-loader',
-						options: postcssLoaderOptions
-					},
-					{
-						loader: 'resolve-url-loader',
-						options: { includeRoot: true }
-					},
-					stylusLoader
-				]
+				use: 'happypack/loader?id=styl'
 			}
 		]
 	},
@@ -85,6 +49,65 @@ const devConfig = {
 		new CircularDependencyPlugin({
 			exclude: /node_modules/,
 			failOnError: true
+		}),
+		new HappyPack({
+			id: 'css',
+			verbose: false,
+			threadPool: happyThreadPool,
+			loaders: [
+				'style-loader',
+				'css-loader',
+				{
+					path: 'postcss-loader',
+					query: postcssLoaderOptions
+				},
+				{
+					path: 'resolve-url-loader',
+					query: { includeRoot: true }
+				}
+			]
+		}),
+		new HappyPack({
+			id: 'sass',
+			verbose: false,
+			threadPool: happyThreadPool,
+			loaders: [
+				'style-loader',
+				'css-loader',
+				{
+					path: 'postcss-loader',
+					query: postcssLoaderOptions
+				},
+				{
+					path: 'resolve-url-loader',
+					query: { includeRoot: true }
+				},
+				{
+					path: 'sass-loader',
+					query: { sourceMap: true }
+				}
+			]
+		}),
+		new HappyPack({
+			id: 'styl',
+			verbose: false,
+			threadPool: happyThreadPool,
+			loaders: [
+				'style-loader',
+				'css-loader',
+				{
+					path: 'postcss-loader',
+					query: postcssLoaderOptions
+				},
+				{
+					path: 'resolve-url-loader',
+					query: { includeRoot: true }
+				},
+				{
+					path: 'stylus-loader',
+					query: stylusLoaderOptions
+				}
+			]
 		})
 	]
 };
