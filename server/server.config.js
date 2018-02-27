@@ -10,9 +10,9 @@ const compress = require('compression');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const webpackBaseConfig = require('../config/webpack.base.config.js');
-const webpackDevConfig = require('../config/webpack.dev.config.js');
-const webpackProdConfig = require('../config/webpack.prod.config.js');
+const webpackBaseConfig = require('../configs/webpack.base.config.js');
+const webpackDevConfig = require('../configs/webpack.dev.config.js');
+const webpackProdConfig = require('../configs/webpack.prod.config.js');
 
 const port = process.env.NODE_ENV === 'development' ? 3000 : 8080;
 const devServerConfig = {

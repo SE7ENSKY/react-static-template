@@ -94,7 +94,7 @@ npm run test:coverage
 **Project structure**
 ```
 react-static-template
-├── config 
+├── configs 
 │   ├── csstransform.config.js
 │   ├── filetransform.config.js
 │   ├── jest.config.js

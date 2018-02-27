@@ -10,8 +10,8 @@ module.exports = {
 	testEnvironment: 'node',
 	testURL: 'http://localhost',
 	transform: {
-		'^.+\\.css$': '<rootDir>/config/csstransform.config.js',
-		'^(?!.*\\.(js|jsx|css|json)$)': '<rootDir>/config/filetransform.config.js'
+		'^.+\\.css$': '<rootDir>/configs/csstransform.config.js',
+		'^(?!.*\\.(js|jsx|css|json)$)': '<rootDir>/configs/filetransform.config.js'
 	},
 	transformIgnorePatterns: [
 		'[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'

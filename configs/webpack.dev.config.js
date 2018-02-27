@@ -15,7 +15,8 @@ const {
 } = require('./webpack.base.config');
 
 const devConfig = {
-	devtool: 'cheap-module-eval-source-map',
+	devtool: 'eval',
+	cache: true,
 	entry: {
 		main: [
 			'event-source-polyfill',

@@ -46,7 +46,7 @@ const stylusLoaderOptions = {
 const postcssLoaderOptions = {
 	sourceMap: true,
 	config: {
-		path: join(PROJECT_ROOT, 'config', 'postcss.config.js'),
+		path: join(PROJECT_ROOT, 'configs', 'postcss.config.js'),
 		ctx: {
 			autoprefixer: {
 				browsers: supportedBrowserslist
@@ -76,7 +76,6 @@ const baseConfig = {
 		tls: 'empty',
 		child_process: 'empty'
 	},
-	cache: true,
 	resolve: {
 		modules: [
 			join(PROJECT_ROOT, 'src'),
