@@ -14,15 +14,17 @@
     "jest": true
   },
   "rules": {
-    "indent": ["error", "tab"],
     "no-tabs": 0,
+    "indent": ["error", "tab", { "SwitchCase": 1 }],
     "quotes": ["error", "single"],
     "jsx-quotes": ["error", "prefer-single"],
     "comma-dangle": ["error", "only-multiline"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/jsx-indent": [2, "tab"],
     "react/jsx-indent-props": [2, "tab"],
-    "jsx-a11y/href-no-hash": "off"
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/anchor-is-valid": [ "error", { "components": [] }]
   },
   "settings": {
     "import/resolver": {

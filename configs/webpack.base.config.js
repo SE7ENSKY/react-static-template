@@ -150,10 +150,6 @@ const baseConfig = {
 				}
 			},
 			{
-				test: /\.json$/,
-				use: 'json-loader'
-			},
-			{
 				test: /\.html$/,
 				use: {
 					loader: 'html-loader',
