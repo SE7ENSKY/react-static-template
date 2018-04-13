@@ -1,26 +1,32 @@
 module.exports = {
 	rootDir: '../',
+	// automock: false,
+	// browser: false,
+	// bail: false,
+	coverageDirectory: '<rootDir>/coverage',
 	collectCoverageFrom: [
-		'src/**/*.{js,jsx}'
+		'src/**/*.{js,jsx}',
+		'!**/node_modules/**',
+		'!**/vendor/**'
 	],
-	testMatch: [
-		'<rootDir>/src/**/__tests__/**/*.js?(x)',
-		'<rootDir>/src/**/?(*.)(spec|test).js?(x)'
-	],
-	testEnvironment: 'node',
-	testURL: 'http://localhost',
-	transform: {
-		'^.+\\.css$': '<rootDir>/configs/csstransform.config.js',
-		'^(?!.*\\.(js|jsx|css|json)$)': '<rootDir>/configs/filetransform.config.js'
+	globals: {
+		__DEV__: true,
 	},
-	transformIgnorePatterns: [
-		'[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'
-	],
+	verbose: true,
+	moduleNameMapper: {
+		'\\.(css|less|styl|scss|sass|sss)$': 'identity-obj-proxy',
+	},
+	transform: {
+		'\\.(js|jsx)$': '<rootDir>/node_modules/babel-jest',
+		'^.+\\.css$': '<rootDir>/configs/csstransform.config.js',
+		'^(?!.*\\.(js|jsx|json|css|less|styl|scss|sass|sss)$)': '<rootDir>/configs/filetransform.config.js'
+	},
+	// transformIgnorePatterns: [
+	// 	'[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'
+	// ],
 	moduleFileExtensions: [
-		'web.js',
 		'js',
 		'json',
-		'web.jsx',
 		'jsx',
 		'node'
 	]

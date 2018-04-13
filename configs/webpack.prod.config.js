@@ -4,7 +4,6 @@ const { merge } = require('lodash');
 const cssMQpacker = require('css-mqpacker');
 const perfectionist = require('perfectionist');
 const cssNano = require('cssnano');
-const HappyPack = require('happypack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const StylesPostprocessorPlugin = require('styles-postprocessor-plugin');
 // const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
@@ -15,7 +14,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const {
 	PROJECT_ROOT,
 	baseConfig,
-	happyThreadPool,
 	postcssLoaderOptions,
 	stylusLoaderOptions
 } = require('./webpack.base.config');
@@ -59,16 +57,19 @@ const cssnanoBaseConfig = {
 	uniqueSelectors: true,
 	zindex: false
 };
+
 const cssnanoMinConfig = {
 	discardComments: {
 		removeAllButFirst: true
 	},
 	normalizeWhitespace: true
 };
+
 const stylesPostprocessorPlugins = [
 	cssMQpacker(),
 	cssNano(merge({}, cssnanoBaseConfig, process.env.BEAUTIFY ? {} : cssnanoMinConfig))
 ];
+
 if (process.env.BEAUTIFY) {
 	stylesPostprocessorPlugins.push(perfectionist({
 		cascade: true,
@@ -89,7 +90,10 @@ if (process.env.BEAUTIFY) {
 
 const prodConfig = {
 	entry: {
-		main: join(PROJECT_ROOT, 'src', 'main.js')
+		main: [
+			'babel-polyfill',
+			join(PROJECT_ROOT, 'src', 'main.js')
+		]
 	},
 	output: {
 		publicPath: '/',
@@ -103,21 +107,59 @@ const prodConfig = {
 			{
 				test: /\.css$/,
 				use: ExtractTextPlugin.extract({
-					use: 'happypack/loader?id=css',
+					use: [
+						'css-loader',
+						{
+							loader: 'postcss-loader',
+							options: postcssLoaderOptions
+						},
+						{
+							loader: 'resolve-url-loader',
+							options: { includeRoot: true }
+						}
+					],
 					fallback: 'style-loader'
 				})
 			},
 			{
 				test: /\.(sass|scss)$/,
 				use: ExtractTextPlugin.extract({
-					use: 'happypack/loader?id=sass',
+					use: [
+						'css-loader',
+						{
+							loader: 'postcss-loader',
+							options: postcssLoaderOptions
+						},
+						{
+							loader: 'resolve-url-loader',
+							options: { includeRoot: true }
+						},
+						{
+							loader: 'sass-loader',
+							options: { sourceMap: true }
+						}
+					],
 					fallback: 'style-loader'
 				})
 			},
 			{
 				test: /\.styl$/,
 				use: ExtractTextPlugin.extract({
-					use: 'happypack/loader?id=styl',
+					use: [
+						'css-loader',
+						{
+							loader: 'postcss-loader',
+							options: postcssLoaderOptions
+						},
+						{
+							loader: 'resolve-url-loader',
+							options: { includeRoot: true }
+						},
+						{
+							loader: 'stylus-loader',
+							options: stylusLoaderOptions
+						}
+					],
 					fallback: 'style-loader'
 				})
 			}
@@ -135,62 +177,6 @@ const prodConfig = {
 			root: PROJECT_ROOT,
 			output: baseConfig.output.path,
 			plugins: stylesPostprocessorPlugins
-		}),
-		new HappyPack({
-			id: 'css',
-			verbose: false,
-			threadPool: happyThreadPool,
-			loaders: [
-				'css-loader',
-				{
-					path: 'postcss-loader',
-					query: postcssLoaderOptions
-				},
-				{
-					path: 'resolve-url-loader',
-					query: { includeRoot: true }
-				}
-			]
-		}),
-		new HappyPack({
-			id: 'sass',
-			verbose: false,
-			threadPool: happyThreadPool,
-			loaders: [
-				'css-loader',
-				{
-					path: 'postcss-loader',
-					query: postcssLoaderOptions
-				},
-				{
-					path: 'resolve-url-loader',
-					query: { includeRoot: true }
-				},
-				{
-					path: 'sass-loader',
-					query: { sourceMap: true }
-				}
-			]
-		}),
-		new HappyPack({
-			id: 'styl',
-			verbose: false,
-			threadPool: happyThreadPool,
-			loaders: [
-				'css-loader',
-				{
-					path: 'postcss-loader',
-					query: postcssLoaderOptions
-				},
-				{
-					path: 'resolve-url-loader',
-					query: { includeRoot: true }
-				},
-				{
-					path: 'stylus-loader',
-					query: stylusLoaderOptions
-				}
-			]
 		})
 	]
 };

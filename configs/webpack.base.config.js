@@ -1,6 +1,6 @@
 if (process.env.TIMESTAMP) {
 	require('console-stamp')(console, {
-		pattern: 'HH:MM:ss',
+		pattern: 'HH:MM:ss.l',
 		label: false
 	});
 }
@@ -10,12 +10,9 @@ const {
 	dirname,
 	resolve,
 	basename,
-	sep,
 	join
 } = require('path');
 const { readFileSync } = require('fs');
-const HappyPack = require('happypack');
-const happyThreadPool = HappyPack.ThreadPool({ size: 4 });
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
@@ -24,15 +21,18 @@ const {
 	WatchIgnorePlugin,
 	DefinePlugin,
 	LoaderOptionsPlugin,
-	BannerPlugin
+	BannerPlugin,
+	IgnorePlugin
 } = require('webpack');
 
 const PROJECT_ROOT = resolve(__dirname, '../');
+
 const supportedBrowserslist = [
 	'last 3 versions',
 	'Explorer >= 11',
 	'Safari >= 9'
 ];
+
 const stylusLoaderOptions = {
 	sourceMap: true,
 	use: nib(),
@@ -43,6 +43,7 @@ const stylusLoaderOptions = {
 	],
 	preferPathResolver: 'webpack'
 };
+
 const postcssLoaderOptions = {
 	sourceMap: true,
 	config: {
@@ -54,9 +55,11 @@ const postcssLoaderOptions = {
 		}
 	}
 };
+
 function customReadFile(file, encoding = 'utf8') {
 	return readFileSync(file, { encoding });
 }
+
 function getModifiedNib(path) {
 	const dirPath = dirname(path);
 	if (customReadFile(path).indexOf('path: fallback') !== -1) {
@@ -69,6 +72,10 @@ const baseConfig = {
 	output: {
 		path: join(PROJECT_ROOT, 'dist')
 	},
+	performance: {
+		hints: false
+	},
+	mode: process.env.NODE_ENV,
 	node: {
 		dgram: 'empty',
 		fs: 'empty',
@@ -108,7 +115,6 @@ const baseConfig = {
 			store: join(PROJECT_ROOT, 'src', 'store'),
 			styles: join(PROJECT_ROOT, 'src', 'styles'),
 			utils: join(PROJECT_ROOT, 'src', 'utils'),
-			modernizr$: join(PROJECT_ROOT, '.modernizrrc')
 		}
 	},
 	module: {
@@ -144,31 +150,52 @@ const baseConfig = {
 				}
 			},
 			{
-				test: /\.modernizrrc.js$/,
-				use: 'modernizr-loader'
-			},
-			{
-				test: /\.modernizrrc(\.json)?$/,
-				use: ['modernizr-loader', 'json-loader']
-			},
-			{
 				test: /\.json$/,
-				use: 'happypack/loader?id=json'
+				use: 'json-loader'
 			},
 			{
 				test: /\.html$/,
-				use: 'happypack/loader?id=html'
+				use: {
+					loader: 'html-loader',
+					options: { attrs: ['img:src', 'link:href'] }
+				}
 			},
 			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
-				use: 'happypack/loader?id=js'
+				use: {
+					loader: 'babel-loader',
+					options: {
+						cacheDirectory: true,
+						babelrc: false,
+						plugins: [
+							'lodash',
+							'transform-decorators',
+							'syntax-dynamic-import',
+							'dynamic-import-webpack',
+							'transform-class-properties',
+							'transform-object-rest-spread'
+						],
+						presets: [
+							'react',
+							[
+								'env',
+								{
+									targets: { browsers: supportedBrowserslist },
+									modules: false,
+									useBuiltIns: true
+								}
+							]
+						]
+					}
+				}
 			}
 		]
 	},
 	plugins: [
 		new DefinePlugin({
-			'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) }
+			'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) },
+			__DEV__: process.env.NODE_ENV === 'development'
 		}),
 		new BannerPlugin({
 			banner: '\n' + '@version: 1.0.0' + '\n\n' + '@author: SE7ENSKY Frontend studio <info@se7ensky.com>\n'
@@ -199,6 +226,7 @@ const baseConfig = {
 			}
 		]),
 		new NoEmitOnErrorsPlugin(),
+		new IgnorePlugin(/^\.\/locale$/, /moment$/), // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack#using-ignoreplugin
 		new WatchIgnorePlugin([join(PROJECT_ROOT, 'node_modules')]),
 		new HtmlWebpackPlugin({
 			template: './src/index.ejs',
@@ -216,62 +244,14 @@ const baseConfig = {
 			options: {
 				customInterpolateName: (url, name, options) => {
 					const prefix = name.replace('[path][name].[ext]', '');
-					const directory = dirname(url).split(sep).pop();
+					const directory = dirname(url).replace(/\\/g, '/').split('/').pop();
 					return join(
 						prefix,
-						prefix.split(sep).indexOf(directory) === -1 ? directory : '',
+						prefix.replace(/\\/g, '/').split('/').indexOf(directory) === -1 ? directory : '',
 						basename(url)
-					);
+					).replace(/\\/g, '/');
 				}
 			}
-		}),
-		new HappyPack({
-			id: 'json',
-			verbose: false,
-			threadPool: happyThreadPool,
-			loaders: ['json-loader']
-		}),
-		new HappyPack({
-			id: 'html',
-			verbose: false,
-			threadPool: happyThreadPool,
-			loaders: [{
-				path: 'html-loader',
-				query: { attrs: ['img:src', 'link:href'] }
-			}]
-		}),
-		new HappyPack({
-			id: 'js',
-			verbose: false,
-			threadPool: happyThreadPool,
-			loaders: [
-				{
-					path: 'babel-loader',
-					query: {
-						cacheDirectory: true,
-						babelrc: false,
-						plugins: [
-							'lodash',
-							'transform-decorators',
-							'syntax-dynamic-import',
-							'dynamic-import-webpack',
-							'transform-class-properties',
-							'transform-runtime',
-							'transform-object-rest-spread'
-						],
-						presets: [
-							'react',
-							[
-								'env',
-								{
-									targets: { browsers: supportedBrowserslist },
-									modules: false
-								}
-							]
-						]
-					}
-				}
-			]
 		})
 	]
 };
@@ -279,7 +259,6 @@ const baseConfig = {
 module.exports = {
 	PROJECT_ROOT,
 	baseConfig,
-	happyThreadPool,
 	postcssLoaderOptions,
 	stylusLoaderOptions
 };

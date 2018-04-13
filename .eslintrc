@@ -3,12 +3,15 @@
   "extends": ["airbnb"],
   "plugins": [
     "react",
-    "jsx-a11y",
-    "import"
+    "jsx-a11y"
   ],
+  "globals": {
+   "__DEV__": true
+  },
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "rules": {
     "indent": ["error", "tab"],
@@ -20,5 +23,12 @@
     "react/jsx-indent": [2, "tab"],
     "react/jsx-indent-props": [2, "tab"],
     "jsx-a11y/href-no-hash": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+       "moduleDirectory": ["node_modules", "src"]
+      }
+    }
   }
 }

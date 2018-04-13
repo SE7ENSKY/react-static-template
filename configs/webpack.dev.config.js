@@ -4,21 +4,31 @@ const {
 	HotModuleReplacementPlugin,
 	NamedModulesPlugin
 } = require('webpack');
-const HappyPack = require('happypack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
 const {
 	PROJECT_ROOT,
 	baseConfig,
-	happyThreadPool,
 	postcssLoaderOptions,
 	stylusLoaderOptions
 } = require('./webpack.base.config');
+
+const modernizrConfig = {
+	'minify': false,
+	'options': [
+		'setClasses'
+	],
+	'feature-detects': [
+		'touchevents'
+	]
+};
 
 const devConfig = {
 	devtool: 'eval',
 	cache: true,
 	entry: {
 		main: [
+			'babel-polyfill',
 			'event-source-polyfill',
 			'webpack-hot-middleware/client',
 			join(PROJECT_ROOT, 'src', 'main.js')
@@ -32,15 +42,56 @@ const devConfig = {
 		rules: [
 			{
 				test: /\.css$/,
-				use: 'happypack/loader?id=css'
+				use: [
+					'style-loader',
+					'css-loader',
+					{
+						loader: 'postcss-loader',
+						options: postcssLoaderOptions
+					},
+					{
+						loader: 'resolve-url-loader',
+						options: { includeRoot: true }
+					}
+				]
 			},
 			{
 				test: /\.(sass|scss)$/,
-				use: 'happypack/loader?id=sass'
+				use: [
+					'style-loader',
+					'css-loader',
+					{
+						loader: 'postcss-loader',
+						options: postcssLoaderOptions
+					},
+					{
+						loader: 'resolve-url-loader',
+						options: { includeRoot: true }
+					},
+					{
+						loader: 'sass-loader',
+						options: { sourceMap: true }
+					}
+				]
 			},
 			{
 				test: /\.styl$/,
-				use: 'happypack/loader?id=styl'
+				use: [
+					'style-loader',
+					'css-loader',
+					{
+						loader: 'postcss-loader',
+						options: postcssLoaderOptions
+					},
+					{
+						loader: 'resolve-url-loader',
+						options: { includeRoot: true }
+					},
+					{
+						loader: 'stylus-loader',
+						options: stylusLoaderOptions
+					}
+				]
 			}
 		]
 	},
@@ -51,65 +102,7 @@ const devConfig = {
 			exclude: /node_modules/,
 			failOnError: true
 		}),
-		new HappyPack({
-			id: 'css',
-			verbose: false,
-			threadPool: happyThreadPool,
-			loaders: [
-				'style-loader',
-				'css-loader',
-				{
-					path: 'postcss-loader',
-					query: postcssLoaderOptions
-				},
-				{
-					path: 'resolve-url-loader',
-					query: { includeRoot: true }
-				}
-			]
-		}),
-		new HappyPack({
-			id: 'sass',
-			verbose: false,
-			threadPool: happyThreadPool,
-			loaders: [
-				'style-loader',
-				'css-loader',
-				{
-					path: 'postcss-loader',
-					query: postcssLoaderOptions
-				},
-				{
-					path: 'resolve-url-loader',
-					query: { includeRoot: true }
-				},
-				{
-					path: 'sass-loader',
-					query: { sourceMap: true }
-				}
-			]
-		}),
-		new HappyPack({
-			id: 'styl',
-			verbose: false,
-			threadPool: happyThreadPool,
-			loaders: [
-				'style-loader',
-				'css-loader',
-				{
-					path: 'postcss-loader',
-					query: postcssLoaderOptions
-				},
-				{
-					path: 'resolve-url-loader',
-					query: { includeRoot: true }
-				},
-				{
-					path: 'stylus-loader',
-					query: stylusLoaderOptions
-				}
-			]
-		})
+		new ModernizrWebpackPlugin(modernizrConfig)
 	]
 };
 

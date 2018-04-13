@@ -13,7 +13,7 @@ const middleware = [
 	routerMiddleware(history)
 ];
 
-if (process.env.NODE_ENV === 'development') {
+if (__DEV__) {
 	const devToolsExtension = window.devToolsExtension;
 
 	if (typeof devToolsExtension === 'function') {

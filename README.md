@@ -2,32 +2,33 @@
 
 **Features**
 ```
- 1. Redux
- 2. Code Splitting
- 3. Hot Reloading (even on IE)
- 4. Babel/ECMAScript 6+
- 5. ESLint
- 6. nodemon
- 7. express
- 8. stylus/nib
- 9. autoprefixer
-10. Jest
-11. CSS MQPacker
-12. react-router-redux
-13. yarn
-14. Modernizr (modernizr-loader)
-15. Service Worker (offline-plugin, HTTPS protocol needed)
-16. Async Routing (react-loadable)
-17. SASS
-18. happypack
+ 1. Webpack 4
+ 2. Redux
+ 3. Code Splitting
+ 4. Hot Reloading (even on IE)
+ 5. Babel/ECMAScript 6+
+ 6. ESLint
+ 7. nodemon
+ 8. express
+ 9. stylus/nib
+10. autoprefixer
+11. Jest
+12. CSS MQPacker
+13. react-router-redux
+14. yarn
+15. Modernizr
+16. Service Worker (offline-plugin, HTTPS protocol needed)
+17. Async Routing (react-loadable)
+18. SASS
 19. Webpack Visualizer
+20. BannerPlugin
 ```
 
 **Requirements**
 
 ```
-node: ^8.0.0
-npm: ^5.0.0
+node: ^8.11.1
+npm: ^5.6.0
 ```
 
 **Install**
