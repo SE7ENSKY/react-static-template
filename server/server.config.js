@@ -1,5 +1,5 @@
 require('console-stamp')(console, {
-	pattern: 'HH:MM:ss',
+	pattern: 'HH:MM:ss.l',
 	label: false
 });
 
