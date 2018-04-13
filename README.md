@@ -95,7 +95,7 @@ npm run test:coverage
 **Project structure**
 ```
 react-static-template
-├── configs 
+├── configs
 │   ├── csstransform.config.js
 │   ├── filetransform.config.js
 │   ├── jest.config.js
@@ -146,4 +146,24 @@ react-static-template
 ├── .modernizrrc
 ├── package.json
 └── README.md
+```
+
+**Responsive components**
+Nowadays web apps mostly are adaptive, and main tool is css media queries. But React ecosystem offers more flexibility and some other way to adapt your content. Let's render components only when we need them, how about appropriate window size.
+We use `react-responsive` to supply this concept. Just use one of responsive components.
+```javascript
+// import our default responsive components, all breakpoints you can configure in 'store/contants.js'
+import {
+	Desktop, // minWidth = 1000px
+	Tablet, // minWidth = 768px and maxWidth = 999px
+	Mobile // maxWidth = 767px
+} from 'components/Responsive';
+
+const ResponsiveText = () => (
+	<div>
+		<Desktop>Desktop</Desktop>
+		<Tablet>Tablet</Tablet>
+		<Mobile>Mobile</Mobile>
+	</div>
+);
 ```
