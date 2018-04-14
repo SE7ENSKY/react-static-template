@@ -96,13 +96,25 @@ npm run test:coverage
 ```
 react-static-template
 ├── configs
+│   ├── browsers.list.js
+│   ├── cssnano.base.config.js
+│   ├── cssnano.minify.config.js
 │   ├── csstransform.config.js
 │   ├── filetransform.config.js
 │   ├── jest.config.js
+│   ├── modernizr.config.js
+│   ├── perfectionist.config.js
 │   ├── postcss.config.js
+│   ├── postcss.loader.config.js
+│   ├── project.root.js
+│   ├── server.port.js
+│   ├── styles.postprocessor.config.js
+│   ├── stylus.loader.config.js
 │   ├── webpack.base.config.js
 │   ├── webpack.dev.config.js
-│   └── webpack.prod.config.js
+│   ├── webpack.dev.server.config.js
+│   ├── webpack.prod.config.js
+│   └── webpack.stats.js
 ├── server
 │   └── server.config.js
 ├── dist
@@ -128,16 +140,13 @@ react-static-template
 │   │   ├── createStore.js
 │   │   └── reducers.js
 │   ├── styles
+│   │   ├── functions.styl
 │   │   ├── helpers.styl
 │   │   ├── main.styl
 │   │   ├── mixins.styl
 │   │   ├── typo.styl
 │   │   └── variables.styl
 │   ├── utils
-│   │   ├── buildQueryString.js
-│   │   ├── closest.js
-│   │   ├── isArrayValid.js
-│   │   └── parseJSON.js
 │   ├── index.html
 │   └── main.js
 ├── .eslintignore

@@ -2,12 +2,15 @@
 @import 'buttons.styl'
 @import 'helpers.styl'
 
+html
+	box-sizing border-box
+	-ms-overflow-style scrollbar
+	-webkit-tap-highlight-color transparent
 
 *
-	box-sizing border-box
-	&:before
-	&:after
-		box-sizing border-box
+*:before
+*:after
+	box-sizing inherit
 
 html
 body
@@ -17,6 +20,7 @@ body
 	// adjust font size
 	font-size 100%
 	-webkit-text-size-adjust 100%
+	-ms-text-size-adjust 100%
 	// font varient
 	font-variant-ligatures none
 	-webkit-font-variant-ligatures none

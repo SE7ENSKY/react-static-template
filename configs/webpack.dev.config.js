@@ -1,3 +1,5 @@
+const { SOURCEMAP } = process.env;
+
 const configMerge = require('webpack-merge');
 const { join } = require('path');
 const {
@@ -6,22 +8,12 @@ const {
 } = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
-const {
-	PROJECT_ROOT,
-	baseConfig,
-	postcssLoaderOptions,
-	stylusLoaderOptions
-} = require('./webpack.base.config');
+const baseConfig = require('./webpack.base.config.js');
+const modernizrConfig = require('./modernizr.config.js');
+const stylusLoaderConfig = require('./stylus.loader.config.js');
+const postcssLoaderConfig = require('./postcss.loader.config.js');
+const PROJECT_ROOT = require('./project.root.js');
 
-const modernizrConfig = {
-	'minify': false,
-	'options': [
-		'setClasses'
-	],
-	'feature-detects': [
-		'touchevents'
-	]
-};
 
 const devConfig = {
 	devtool: 'eval',
@@ -47,11 +39,7 @@ const devConfig = {
 					'css-loader',
 					{
 						loader: 'postcss-loader',
-						options: postcssLoaderOptions
-					},
-					{
-						loader: 'resolve-url-loader',
-						options: { includeRoot: true }
+						options: postcssLoaderConfig
 					}
 				]
 			},
@@ -62,15 +50,11 @@ const devConfig = {
 					'css-loader',
 					{
 						loader: 'postcss-loader',
-						options: postcssLoaderOptions
-					},
-					{
-						loader: 'resolve-url-loader',
-						options: { includeRoot: true }
+						options: postcssLoaderConfig
 					},
 					{
 						loader: 'sass-loader',
-						options: { sourceMap: true }
+						options: { sourceMap: !!SOURCEMAP }
 					}
 				]
 			},
@@ -81,15 +65,11 @@ const devConfig = {
 					'css-loader',
 					{
 						loader: 'postcss-loader',
-						options: postcssLoaderOptions
-					},
-					{
-						loader: 'resolve-url-loader',
-						options: { includeRoot: true }
+						options: postcssLoaderConfig
 					},
 					{
 						loader: 'stylus-loader',
-						options: stylusLoaderOptions
+						options: stylusLoaderConfig
 					}
 				]
 			}

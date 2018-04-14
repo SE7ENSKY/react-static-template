@@ -1,3 +1,5 @@
+const { NODE_ENV } = process.env;
+
 require('console-stamp')(console, {
 	pattern: 'HH:MM:ss.l',
 	label: false
@@ -12,53 +14,28 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const webpackBaseConfig = require('../configs/webpack.base.config.js');
 const webpackDevConfig = require('../configs/webpack.dev.config.js');
+const webpackDevServerConfig = require('../configs/webpack.dev.server.config.js');
 const webpackProdConfig = require('../configs/webpack.prod.config.js');
+const serverPort = require('../configs/server.port.js');
 
-const port = process.env.NODE_ENV === 'development' ? 3000 : 8080;
-const devServerConfig = {
-	watchOptions: {
-		ignored: /node_modules/
-	},
-	contentBase: webpackBaseConfig.baseConfig.output.path,
-	publicPath: webpackDevConfig.output.publicPath,
-	headers: {
-		'Access-Control-Allow-Origin': '*'
-	},
-	historyApiFallback: true,
-	compress: false,
-	hot: true,
-	lazy: false,
-	inline: true,
-	host: 'localhost',
-	port,
-	stats: {
-		colors: true,
-		hash: process.env.NODE_ENV === 'production',
-		chunks: false,
-		timings: process.env.NODE_ENV === 'production',
-		chunkModules: false,
-		modules: false,
-		assets: true,
-		children: false
-	}
-};
 
+const isDevelopment = NODE_ENV === 'development';
 const app = express();
-const compiler = webpack(process.env.NODE_ENV === 'development' ? webpackDevConfig : webpackProdConfig);
+const compiler = webpack(isDevelopment ? webpackDevConfig : webpackProdConfig);
 app.use(cors());
 
-if (process.env.NODE_ENV === 'development') {
-	const middleware = webpackDevMiddleware(compiler, devServerConfig);
+if (isDevelopment) {
+	const middleware = webpackDevMiddleware(compiler, webpackDevServerConfig);
 	app.use(middleware);
 	app.use(webpackHotMiddleware(compiler));
 	middleware.waitUntilValid(function () {
 		app.get('*', function response(req, res) {
-			res.write(middleware.fileSystem.readFileSync(join(webpackBaseConfig.baseConfig.output.path, 'index.html')));
+			res.write(middleware.fileSystem.readFileSync(join(webpackBaseConfig.output.path, 'index.html')));
 			res.end();
 		});
-		app.listen(port, '0.0.0.0', function onStart(err) {
+		app.listen(serverPort, '0.0.0.0', function onStart(err) {
 			if (err) console.log(err);
-			console.info('Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port);
+			console.info('Listening on port %s. Open up http://localhost:%s/ in your browser.', serverPort, serverPort);
 		});
 	});
 } else {
@@ -67,18 +44,18 @@ if (process.env.NODE_ENV === 'development') {
 			console.error(err);
 			return;
 		}
-		console.log(stats.toString(devServerConfig.stats));
+		console.log(stats.toString(webpackDevServerConfig.stats));
 	});
 	compiler.plugin('done', function (stats) {
 		app.use(compress());
-		app.use(express.static(webpackBaseConfig.baseConfig.output.path, { extensions: ['html'] }));
+		app.use(express.static(webpackBaseConfig.output.path, { extensions: ['html'] }));
 		app.get('*', function response(req, res) {
-			res.sendFile(join(webpackBaseConfig.baseConfig.output.path, 'index.html'));
+			res.sendFile(join(webpackBaseConfig.output.path, 'index.html'));
 		});
-		app.listen(port, '0.0.0.0', function onStart(err) {
+		app.listen(serverPort, '0.0.0.0', function onStart(err) {
 			if (err) console.log(err);
 			console.log('webpack: Compiled successfully.');
-			console.info('Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port);
+			console.info('Listening on port %s. Open up http://localhost:%s/ in your browser.', serverPort, serverPort);
 		});
 	});
 }

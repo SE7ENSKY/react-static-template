@@ -1,92 +1,26 @@
+const {
+	// NODE_ENV,
+	SOURCEMAP,
+	BEAUTIFY,
+	TIMESTAMP
+} = process.env;
+
 const configMerge = require('webpack-merge');
 const { join } = require('path');
-const { merge } = require('lodash');
-const cssMQpacker = require('css-mqpacker');
-const perfectionist = require('perfectionist');
-const cssNano = require('cssnano');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const StylesPostprocessorPlugin = require('styles-postprocessor-plugin');
 // const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
 // const OfflinePlugin = require('offline-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+// const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const {
-	PROJECT_ROOT,
-	baseConfig,
-	postcssLoaderOptions,
-	stylusLoaderOptions
-} = require('./webpack.base.config');
+const baseConfig = require('./webpack.base.config');
+const stylesPostprocessorConfig = require('./styles.postprocessor.config');
+const webpackStats = require('./webpack.stats');
+const stylusLoaderConfig = require('./stylus.loader.config.js');
+const postcssLoaderConfig = require('./postcss.loader.config.js');
+const PROJECT_ROOT = require('./project.root.js');
 
-const cssnanoBaseConfig = {
-	autoprefixer: false,
-	rawCache: true,
-	calc: false,
-	colormin: false,
-	convertValues: false,
-	discardComments: false,
-	discardDuplicates: true,
-	discardEmpty: true,
-	discardOverridden: false,
-	discardUnused: false,
-	mergeIdents: false,
-	mergeLonghand: false,
-	mergeRules: true,
-	minifyFontValues: {
-		removeAfterKeyword: false,
-		removeDuplicates: true,
-		removeQuotes: false
-	},
-	minifyGradients: false,
-	minifyParams: false,
-	minifySelectors: false,
-	normalizeCharset: false,
-	normalizeDisplayValues: false,
-	normalizePositions: false,
-	normalizeRepeatStyle: false,
-	normalizeString: false,
-	normalizeTimingFunctions: false,
-	normalizeUnicode: false,
-	normalizeUrl: false,
-	normalizeWhitespace: false,
-	orderedValues: true,
-	reduceIdents: false,
-	reduceInitial: false,
-	reduceTransforms: false,
-	svgo: false,
-	uniqueSelectors: true,
-	zindex: false
-};
-
-const cssnanoMinConfig = {
-	discardComments: {
-		removeAllButFirst: true
-	},
-	normalizeWhitespace: true
-};
-
-const stylesPostprocessorPlugins = [
-	cssMQpacker(),
-	cssNano(merge({}, cssnanoBaseConfig, process.env.BEAUTIFY ? {} : cssnanoMinConfig))
-];
-
-if (process.env.BEAUTIFY) {
-	stylesPostprocessorPlugins.push(perfectionist({
-		cascade: true,
-		colorCase: 'lower',
-		colorShorthand: false,
-		format: 'expanded',
-		indentChar: ' ',
-		indentSize: 2,
-		trimLeadingZero: false,
-		trimTrailingZeros: true,
-		maxAtRuleLength: false,
-		maxSelectorLength: 1,
-		maxValueLength: false,
-		sourcemap: false,
-		zeroLengthNoUnit: true
-	}));
-}
 
 const prodConfig = {
 	entry: {
@@ -97,11 +31,11 @@ const prodConfig = {
 	},
 	output: {
 		publicPath: '/',
-		filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`,
-		chunkFilename: `assets/[name].chunk${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`
+		filename: `assets/[name]${BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`,
+		chunkFilename: `assets/[name].chunk${BEAUTIFY ? '' : '.min'}.[chunkhash:8].js`
 	},
 	watch: false,
-	devtool: process.env.SOURCEMAP ? 'source-map' : false,
+	devtool: SOURCEMAP ? 'source-map' : false,
 	module: {
 		rules: [
 			{
@@ -111,11 +45,7 @@ const prodConfig = {
 						'css-loader',
 						{
 							loader: 'postcss-loader',
-							options: postcssLoaderOptions
-						},
-						{
-							loader: 'resolve-url-loader',
-							options: { includeRoot: true }
+							options: postcssLoaderConfig
 						}
 					],
 					fallback: 'style-loader'
@@ -128,15 +58,11 @@ const prodConfig = {
 						'css-loader',
 						{
 							loader: 'postcss-loader',
-							options: postcssLoaderOptions
-						},
-						{
-							loader: 'resolve-url-loader',
-							options: { includeRoot: true }
+							options: postcssLoaderConfig
 						},
 						{
 							loader: 'sass-loader',
-							options: { sourceMap: true }
+							options: { sourceMap: !!SOURCEMAP }
 						}
 					],
 					fallback: 'style-loader'
@@ -149,15 +75,11 @@ const prodConfig = {
 						'css-loader',
 						{
 							loader: 'postcss-loader',
-							options: postcssLoaderOptions
-						},
-						{
-							loader: 'resolve-url-loader',
-							options: { includeRoot: true }
+							options: postcssLoaderConfig
 						},
 						{
 							loader: 'stylus-loader',
-							options: stylusLoaderOptions
+							options: stylusLoaderConfig
 						}
 					],
 					fallback: 'style-loader'
@@ -170,20 +92,16 @@ const prodConfig = {
 		// 	defaultAttribute: 'defer'
 		// }),
 		new ExtractTextPlugin({
-			filename: `assets/[name]${process.env.BEAUTIFY ? '' : '.min'}.[chunkhash:8].css`,
+			filename: `assets/[name]${BEAUTIFY ? '' : '.min'}.[chunkhash:8].css`,
 			allChunks: true
 		}),
-		new StylesPostprocessorPlugin({
-			root: PROJECT_ROOT,
-			output: baseConfig.output.path,
-			plugins: stylesPostprocessorPlugins
-		})
+		new StylesPostprocessorPlugin(stylesPostprocessorConfig)
 	]
 };
 
-if (!process.env.BEAUTIFY) {
+if (!BEAUTIFY) {
 	prodConfig.plugins.push(new UglifyJsPlugin({
-		sourceMap: true,
+		sourceMap: !!SOURCEMAP,
 		cache: false,
 		parallel: true,
 		uglifyOptions: {
@@ -196,20 +114,24 @@ if (!process.env.BEAUTIFY) {
 	}));
 }
 
-if (!process.env.TIMESTAMP) {
-	prodConfig.plugins.push(new ProgressBarPlugin({
-		width: 40,
-		summary: false
-	}));
+// if (!TIMESTAMP) {
+// 	prodConfig.plugins.push(new ProgressBarPlugin({
+// 		width: 40,
+// 		summary: false
+// 	}));
+// }
+
+if (TIMESTAMP) {
+	prodConfig.stats = webpackStats;
 }
 
-if (process.env.SOURCEMAP) {
+if (SOURCEMAP) {
 	prodConfig.plugins.push(new Visualizer({
 		filename: './bundle-statistics.html'
 	}));
 }
 
-// if (process.env.NODE_ENV === 'production') {
+// if (NODE_ENV === 'production') {
 // 	prodConfig.plugins.push(new OfflinePlugin({
 // 		caches: {
 // 			main: [
