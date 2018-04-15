@@ -70,7 +70,8 @@ const baseConfig = {
 			v: join(PROJECT_ROOT, 'src', 'static', 'v'),
 			store: join(PROJECT_ROOT, 'src', 'store'),
 			styles: join(PROJECT_ROOT, 'src', 'styles'),
-			utils: join(PROJECT_ROOT, 'src', 'utils')
+			utils: join(PROJECT_ROOT, 'src', 'utils'),
+			'lodash-es': 'lodash'
 		}
 	},
 	module: {
@@ -96,6 +97,10 @@ const baseConfig = {
 						babelrc: false,
 						plugins: [
 							'lodash',
+							'date-fns',
+							'transform-react-remove-prop-types',
+							'transform-imports',
+							'babel-plugin-styled-components',
 							'transform-decorators',
 							'syntax-dynamic-import',
 							'dynamic-import-webpack',
