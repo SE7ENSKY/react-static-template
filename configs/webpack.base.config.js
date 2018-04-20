@@ -22,7 +22,6 @@ const {
 	IgnorePlugin
 } = require('webpack');
 const PROJECT_ROOT = require('./project.root.js');
-const browsersList = require('./browsers.list.js');
 
 
 const baseConfig = {
@@ -47,6 +46,7 @@ const baseConfig = {
 		],
 		extensions: [
 			'.js',
+			'.jsx',
 			'.json',
 			'.css',
 			'.styl',
@@ -71,7 +71,7 @@ const baseConfig = {
 			store: join(PROJECT_ROOT, 'src', 'store'),
 			styles: join(PROJECT_ROOT, 'src', 'styles'),
 			utils: join(PROJECT_ROOT, 'src', 'utils'),
-			'lodash-es': 'lodash'
+			vendor: join(PROJECT_ROOT, 'src', 'vendor')
 		}
 	},
 	module: {
@@ -94,30 +94,6 @@ const baseConfig = {
 					loader: 'babel-loader',
 					options: {
 						cacheDirectory: true,
-						babelrc: false,
-						plugins: [
-							'lodash',
-							'date-fns',
-							'transform-react-remove-prop-types',
-							'transform-imports',
-							'babel-plugin-styled-components',
-							'transform-decorators',
-							'syntax-dynamic-import',
-							'dynamic-import-webpack',
-							'transform-class-properties',
-							'transform-object-rest-spread'
-						],
-						presets: [
-							'react',
-							[
-								'env',
-								{
-									targets: { browsers: browsersList },
-									modules: false,
-									useBuiltIns: true
-								}
-							]
-						]
 					}
 				}
 			}
@@ -152,6 +128,7 @@ const baseConfig = {
 					'v/*',
 					'f/*',
 					'*.js',
+					'*.mjml',
 					'.DS_Store'
 				]
 			}
