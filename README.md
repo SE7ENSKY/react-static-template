@@ -101,7 +101,6 @@ react-static-template
 │   ├── cssnano.minify.config.js
 │   ├── csstransform.config.js
 │   ├── filetransform.config.js
-│   ├── jest.config.js
 │   ├── modernizr.config.js
 │   ├── perfectionist.config.js
 │   ├── postcss.config.js
