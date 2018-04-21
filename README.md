@@ -28,7 +28,9 @@
 
 ```
 node: ^8.11.1
+// one of two
 npm: ^5.6.0
+yarn: ^1.6.0
 ```
 
 **Install**

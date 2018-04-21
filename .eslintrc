@@ -3,7 +3,8 @@
   "extends": ["airbnb"],
   "plugins": [
     "react",
-    "jsx-a11y"
+    "jsx-a11y",
+    "import"
   ],
   "globals": {
    "__DEV__": true

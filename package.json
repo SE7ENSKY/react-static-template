@@ -10,6 +10,10 @@
     "test:coverage": "cross-env NODE_ENV=test jest --coverage",
     "test": "cross-env NODE_ENV=test jest --watchAll"
   },
+  "engines": {
+    "node": ">=8.11.1",
+    "yarn": ">=1.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:SE7ENSKY/react-static-template.git"
