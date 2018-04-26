@@ -12,7 +12,7 @@
  8. express
  9. stylus/nib
 10. autoprefixer
-11. Jest
+11. Jest/enzyme
 12. CSS MQPacker
 13. react-router-redux
 14. yarn
@@ -22,6 +22,7 @@
 18. SASS
 19. Webpack Visualizer
 20. BannerPlugin
+21. react-perf-devtool
 ```
 
 **Requirements**

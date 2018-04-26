@@ -24,3 +24,9 @@ if (module.hot) {
 // if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
 // 	OfflinePluginRuntime.install();
 // }
+
+// need browser extension
+// if (__DEV__) {
+// 	const registerObserver = require('react-perf-devtool');
+// 	registerObserver();
+// }
