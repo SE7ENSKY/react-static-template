@@ -72,6 +72,7 @@
     "postcss": "^6.0.21",
     "postcss-loader": "^2.1.4",
     "progress-bar-webpack-plugin": "^1.11.0",
+    "react-perf-devtool": "^3.0.5",
     "sass-loader": "^7.0.1",
     "script-ext-html-webpack-plugin": "^2.0.1",
     "style-loader": "^0.21.0",
@@ -184,36 +185,6 @@
     }
   },
   "babel": {
-    "plugins": [
-      "lodash",
-      "date-fns",
-      "transform-react-remove-prop-types",
-      "transform-imports",
-      "babel-plugin-styled-components",
-      "transform-decorators",
-      "syntax-dynamic-import",
-      "dynamic-import-webpack",
-      "transform-class-properties",
-      "transform-object-rest-spread",
-      "transform-react-constant-elements",
-      "transform-react-inline-elements"
-    ],
-    "presets": [
-      "react",
-      [
-        "env",
-        {
-          "targets": {
-            "browsers": [
-              ">0.25%",
-              "not op_mini all"
-            ]
-          },
-          "modules": false,
-          "useBuiltIns": true
-        }
-      ]
-    ],
     "env": {
       "test": {
         "plugins": [
@@ -227,6 +198,69 @@
           "react",
           [
             "env"
+          ]
+        ]
+      },
+      "production": {
+        "plugins": [
+          "lodash",
+          "date-fns",
+          "transform-react-remove-prop-types",
+          "transform-imports",
+          "styled-components",
+          "transform-decorators",
+          "syntax-dynamic-import",
+          "dynamic-import-webpack",
+          "transform-class-properties",
+          "transform-object-rest-spread",
+          "transform-react-constant-elements",
+          "transform-react-inline-elements"
+        ],
+        "presets": [
+          "react",
+          [
+            "env",
+            {
+              "targets": {
+                "browsers": [
+                  ">0.25%",
+                  "not op_mini all"
+                ]
+              },
+              "modules": false,
+              "loose": false,
+              "spec": false,
+              "useBuiltIns": true
+            }
+          ]
+        ]
+      },
+      "development": {
+        "plugins": [
+          "lodash",
+          "date-fns",
+          "transform-decorators",
+          "syntax-dynamic-import",
+          "dynamic-import-webpack",
+          "transform-class-properties",
+          "transform-object-rest-spread"
+        ],
+        "presets": [
+          "react",
+          [
+            "env",
+            {
+              "targets": {
+                "browsers": [
+                  ">0.25%",
+                  "not op_mini all"
+                ]
+              },
+              "modules": false,
+              "loose": false,
+              "spec": false,
+              "useBuiltIns": true
+            }
           ]
         ]
       }
