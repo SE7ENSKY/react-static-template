@@ -1,5 +1,4 @@
 module.exports = [
-	'last 3 versions',
-	'Explorer >= 11',
-	'Safari >= 9'
+	'>0.25%',
+	'not op_mini all'
 ];
