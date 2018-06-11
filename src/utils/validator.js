@@ -1,23 +1,11 @@
-import {
-	required,
-	email
-} from 'redux-form-validators';
+export default validationRules => (values) => {
+	if (!validationRules) return {};
 
-const validations = {
-	'contact-form': {
-		name: [required()],
-		email: [required(), email()],
-		description: [required()],
-	},
-};
-
-const validator = formName => (values) => {
-	const validation = validations[formName];
-	if (!validation) return {};
-
-	const errors = Object.keys(validation).reduce((prev, field) => {
+	const errors = Object.keys(validationRules).reduce((prev, field) => {
 		const value = values[field];
-		const check = validation[field].map(validateField => validateField(value, values)).find(x => x);
+		const check = validationRules[field]
+			.map(validateField => validateField(value, values))
+			.find(x => x);
 
 		if (!check) return prev;
 		return {
@@ -28,5 +16,3 @@ const validator = formName => (values) => {
 
 	return errors;
 };
-
-export default validator;

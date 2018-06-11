@@ -1,7 +1,6 @@
 /**
 	Return operation system name
 */
-
 export default () => {
 	if (navigator.appVersion.indexOf('Win') !== -1) return 'Windows';
 	if (navigator.appVersion.indexOf('Mac') !== -1) return 'MacOS';
