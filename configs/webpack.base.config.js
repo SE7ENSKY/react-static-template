@@ -60,7 +60,9 @@ const baseConfig = {
 		],
 		alias: {
 			components: join(PROJECT_ROOT, 'src', 'components'),
+			configurations: join(PROJECT_ROOT, 'src', 'configurations'),
 			containers: join(PROJECT_ROOT, 'src', 'containers'),
+			decorators: join(PROJECT_ROOT, 'src', 'decorators'),
 			layouts: join(PROJECT_ROOT, 'src', 'layouts'),
 			reducers: join(PROJECT_ROOT, 'src', 'reducers'),
 			routes: join(PROJECT_ROOT, 'src', 'routes'),

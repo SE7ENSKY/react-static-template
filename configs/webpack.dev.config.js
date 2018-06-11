@@ -12,6 +12,7 @@ const baseConfig = require('./webpack.base.config.js');
 const modernizrConfig = require('./modernizr.config.js');
 const stylusLoaderConfig = require('./stylus.loader.config.js');
 const postcssLoaderConfig = require('./postcss.loader.config.js');
+const sassResourcesLoaderConfig = require('./sass.resources.loader.config');
 const PROJECT_ROOT = require('./project.root.js');
 
 
@@ -55,6 +56,10 @@ const devConfig = {
 					{
 						loader: 'sass-loader',
 						options: { sourceMap: !!SOURCEMAP }
+					},
+					{
+						loader: 'sass-resources-loader',
+						options: sassResourcesLoaderConfig
 					}
 				]
 			},

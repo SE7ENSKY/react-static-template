@@ -18,6 +18,7 @@ const baseConfig = require('./webpack.base.config');
 const stylesPostprocessorConfig = require('./styles.postprocessor.config');
 const webpackStats = require('./webpack.stats');
 const stylusLoaderConfig = require('./stylus.loader.config.js');
+const sassResourcesLoaderConfig = require('./sass.resources.loader.config');
 const postcssLoaderConfig = require('./postcss.loader.config.js');
 const PROJECT_ROOT = require('./project.root.js');
 
@@ -63,6 +64,10 @@ const prodConfig = {
 						{
 							loader: 'sass-loader',
 							options: { sourceMap: !!SOURCEMAP }
+						},
+						{
+							loader: 'sass-resources-loader',
+							options: sassResourcesLoaderConfig
 						}
 					],
 					fallback: 'style-loader'
