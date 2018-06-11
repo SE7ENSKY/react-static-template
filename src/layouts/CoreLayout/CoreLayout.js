@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
 	Route,
 	Switch
 } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import ComponentsContainer from 'containers/ComponentsContainer';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
@@ -29,7 +28,7 @@ const LoadableAbout = Loadable({
 
 function CoreLayout() {
 	return (
-		<ComponentsContainer>
+		<Fragment>
 			<Header />
 			<div className='main'>
 				<Switch>
@@ -38,7 +37,7 @@ function CoreLayout() {
 				</Switch>
 			</div>
 			<Footer />
-		</ComponentsContainer>
+		</Fragment>
 	);
 }
 
