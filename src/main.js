@@ -1,4 +1,5 @@
 // import 'raf/polyfill'; // requestAnimationFrame polyfill
+// import 'intersection-observer'; // IntersectionObserver polyfill
 import React from 'react';
 import { render } from 'react-dom';
 // import 'whatwg-fetch';
