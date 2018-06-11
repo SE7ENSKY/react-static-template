@@ -2,6 +2,7 @@ import React from 'react';
 import { string, bool } from 'prop-types';
 import Loader from '../Loader';
 
+
 const LoadingComponent = (props) => {
 	const { error, pastDelay } = props;
 

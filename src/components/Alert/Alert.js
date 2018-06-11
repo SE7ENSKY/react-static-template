@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import './Alert.styl';
 
 
-function Alert(props) {
+const Alert = (props) => {
 	const {
 		modifier,
 		text
@@ -18,7 +18,7 @@ function Alert(props) {
 			{text}
 		</div>
 	);
-}
+};
 
 Alert.propTypes = {
 	modifier: string,

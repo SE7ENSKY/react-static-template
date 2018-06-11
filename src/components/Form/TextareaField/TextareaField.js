@@ -1,6 +1,11 @@
 import React from 'react';
-import { shape, string, bool } from 'prop-types';
+import {
+	shape,
+	string,
+	bool
+} from 'prop-types';
 import classNames from 'classnames';
+
 
 const TextareaField = (props) => {
 	const {

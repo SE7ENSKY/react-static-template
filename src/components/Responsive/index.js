@@ -2,6 +2,7 @@ import React from 'react';
 import MediaQuery from 'react-responsive';
 import { MIN_DESKTOP_WIDTH, MIN_TABLET_WIDTH } from 'store/constants';
 
+
 const Desktop = props => <MediaQuery minWidth={MIN_DESKTOP_WIDTH} {...props} />;
 const Tablet = props => (
 	<MediaQuery

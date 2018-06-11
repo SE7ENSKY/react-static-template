@@ -2,12 +2,10 @@ import React from 'react';
 import './Footer.styl';
 
 
-function Footer() {
-	return (
-		<footer className='footer'>
-			©Se7ensky 2017-current
-		</footer>
-	);
-}
+const Footer = () => (
+	<footer className='footer'>
+		©Se7ensky 2018-current
+	</footer>
+);
 
 export default Footer;
