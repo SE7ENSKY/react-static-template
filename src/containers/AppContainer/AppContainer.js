@@ -4,12 +4,15 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from 'store/createStore';
 import CoreLayout from 'layouts/CoreLayout';
+import ScrollRestoration from 'components/ScrollRestoration';
 
 
 const AppContainer = () => (
 	<Provider store={store}>
 		<ConnectedRouter history={history}>
-			<Route path='/' component={CoreLayout} />
+			<ScrollRestoration>
+				<Route path='/' component={CoreLayout} />
+			</ScrollRestoration>
 		</ConnectedRouter>
 	</Provider>
 );
