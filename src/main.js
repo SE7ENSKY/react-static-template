@@ -1,8 +1,8 @@
 // import 'raf/polyfill'; // requestAnimationFrame polyfill
 // import 'intersection-observer'; // IntersectionObserver polyfill
+// import 'whatwg-fetch';
 import React from 'react';
 import { render } from 'react-dom';
-// import 'whatwg-fetch';
 // import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 import App from 'containers/AppContainer';
 import 'normalize.css/normalize.css';
