@@ -24,6 +24,10 @@ const {
 const PROJECT_ROOT = require('./project.root.js');
 
 
+function toUNIXPath(filePath) {
+	return filePath.replace(/(\\{2}|\\)/g, '/');
+}
+
 const baseConfig = {
 	output: {
 		path: join(PROJECT_ROOT, 'dist')
@@ -80,7 +84,20 @@ const baseConfig = {
 		rules: [
 			{
 				test: /\.(jpe?g|png|gif|ico|eot|ttf|woff|woff2|svg|mp4|webm)$/,
-				use: 'file-loader'
+				use: {
+					loader: 'file-loader',
+					// for assets from node_modules
+					options: {
+						outputPath: 'assets/',
+						name(file) {
+							const base = toUNIXPath(file.replace(PROJECT_ROOT, ''));
+							if (file.indexOf('node_modules') !== -1) {
+								return `${base.replace('/node_modules/', '').split('/')[0]}/[name].[ext]`;
+							}
+							return '[name].[ext]';
+						}
+					}
+				}
 			},
 			{
 				test: /\.html$/,
