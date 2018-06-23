@@ -17,6 +17,13 @@ iconParams()
 	-webkit-font-smoothing antialiased
 	-moz-osx-font-smoothing grayscale
 
+truncateString(value = 0)
+	if value
+		width value
+	white-space nowrap
+	overflow hidden
+	text-overflow ellipsis
+
 preventTextOverflow()
 	// These are technically the same, but use both
 	overflow-wrap break-word
