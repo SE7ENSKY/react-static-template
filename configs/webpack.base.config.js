@@ -14,6 +14,7 @@ const { join } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
 const {
 	NoEmitOnErrorsPlugin,
 	WatchIgnorePlugin,
@@ -21,6 +22,7 @@ const {
 	BannerPlugin,
 	IgnorePlugin
 } = require('webpack');
+const modernizrConfig = require('./modernizr.config.js');
 const PROJECT_ROOT = require('./project.root.js');
 
 
@@ -155,6 +157,7 @@ const baseConfig = {
 		new NoEmitOnErrorsPlugin(),
 		new IgnorePlugin(/^\.\/locale$/, /moment$/), // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack#using-ignoreplugin
 		new WatchIgnorePlugin([join(PROJECT_ROOT, 'node_modules')]),
+		new ModernizrWebpackPlugin(modernizrConfig),
 		new HtmlWebpackPlugin({
 			template: './src/index.ejs',
 			filename: 'index.html',

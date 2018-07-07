@@ -7,9 +7,7 @@ const {
 	NamedModulesPlugin
 } = require('webpack');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const ModernizrWebpackPlugin = require('modernizr-webpack-plugin');
 const baseConfig = require('./webpack.base.config.js');
-const modernizrConfig = require('./modernizr.config.js');
 const stylusLoaderConfig = require('./stylus.loader.config.js');
 const postcssLoaderConfig = require('./postcss.loader.config.js');
 const sassResourcesLoaderConfig = require('./sass.resources.loader.config');
@@ -86,8 +84,7 @@ const devConfig = {
 		new CircularDependencyPlugin({
 			exclude: /node_modules/,
 			failOnError: true
-		}),
-		new ModernizrWebpackPlugin(modernizrConfig)
+		})
 	]
 };
 
