@@ -1,5 +1,13 @@
+const {
+	NODE_ENV,
+	BEAUTIFY
+} = process.env;
+
+
 module.exports = {
-	'minify': false,
+	'filename': `assets/modernizr-bundle${BEAUTIFY ? '' : '.min'}${NODE_ENV === 'production' ? '.[chunkhash]' : ''}.js`,
+	'htmlWebpackPlugin': true,
+	'minify': !BEAUTIFY,
 	'options': [
 		'setClasses'
 	],
