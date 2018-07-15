@@ -18,6 +18,7 @@
     "no-tabs": 0,
     "indent": ["error", "tab", { "SwitchCase": 1 }],
     "quotes": ["error", "single", { "avoidEscape": true }],
+    "quote-props": ["error", "consistent-as-needed"],
     "comma-dangle": ["error", "only-multiline"],
     "operator-linebreak": 0,
     "no-else-return": ["error", { "allowElseIf": true }],
