@@ -1,6 +1,7 @@
 // import 'raf/polyfill'; // requestAnimationFrame polyfill
 // import 'intersection-observer'; // IntersectionObserver polyfill
-// import 'whatwg-fetch';
+// import 'whatwg-fetch'; // Fetch polyfill
+// import 'element-closest'; // #Element.closest polyfill
 import React from 'react';
 import { render } from 'react-dom';
 // import * as OfflinePluginRuntime from 'offline-plugin/runtime';
