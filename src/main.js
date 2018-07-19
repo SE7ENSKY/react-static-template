@@ -2,6 +2,7 @@
 // import 'intersection-observer'; // IntersectionObserver polyfill
 // import 'whatwg-fetch'; // Fetch polyfill
 // import 'element-closest'; // #Element.closest polyfill
+// import 'smoothscroll-polyfill'; // Smooth Scroll behavior polyfill
 import React from 'react';
 import { render } from 'react-dom';
 // import * as OfflinePluginRuntime from 'offline-plugin/runtime';
