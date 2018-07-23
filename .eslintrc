@@ -7,7 +7,11 @@
     "import"
   ],
   "globals": {
-   "__DEV__": true
+   "__DEV__": true,
+   "shallow": true,
+   "render": true,
+   "mount": true,
+   "sinon": true
   },
   "env": {
     "browser": true,
